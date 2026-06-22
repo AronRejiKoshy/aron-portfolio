@@ -3,6 +3,8 @@ import type { ReactNode } from "react";
 import { CorporateModeProvider } from "@/components/corporate-mode";
 import { SiteChrome } from "@/components/site-chrome";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata: Metadata = {
   title: "Aron | Questions Until Something Interesting Happens",
@@ -25,6 +27,8 @@ export default function RootLayout({
         <CorporateModeProvider>
           <SiteChrome>{children}</SiteChrome>
         </CorporateModeProvider>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
