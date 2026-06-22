@@ -1,21 +1,18 @@
 "use client";
 
-import { ArrowDown, ArrowRight, ExternalLink } from "lucide-react";
+import { ArrowDown, ArrowRight } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
-import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useCorporateMode } from "@/components/corporate-mode";
 import { Reveal } from "@/components/reveal";
-import { experience, obsessions, projects } from "@/data/content";
+import { obsessions } from "@/data/content";
 
 export function HomePage() {
   const { corporate, spotifyMode, setSpotifyMode, isScrolled } = useCorporateMode();
 
-  const accentText = spotifyMode ? "text-[#1DB954]" : "text-signal-lime";
   const accentBg = spotifyMode ? "bg-[#1DB954]" : "bg-signal-lime";
   const accentBorder = spotifyMode ? "border-[#1DB954]" : "border-signal-lime";
-  const groupHoverAccentBg = spotifyMode ? "group-hover:bg-[#1DB954]" : "group-hover:bg-signal-lime";
 
   if (corporate) {
     return <CorporateHome />;
@@ -86,98 +83,15 @@ export function HomePage() {
         </div>
       </section>
 
-      <section id="work" className="px-4 py-24 md:px-8 md:py-32">
-        <div className="mx-auto max-w-[1500px]">
-          <Reveal className="flex flex-col justify-between gap-8 md:flex-row md:items-end">
-            <div>
-              <p className={`mb-4 text-sm transition-colors duration-500 ${accentText}`}>Featured Work</p>
-              <h2 className="max-w-5xl text-5xl leading-[0.98] text-balance md:text-7xl lg:text-8xl">
-                The work is evidence of curiosity.
-              </h2>
-            </div>
-            <p className="max-w-md text-lg leading-relaxed text-signal-paper/62">
-              Projects appear as questions first because the question is usually where the interesting bit lives.
-            </p>
-          </Reveal>
-
-          <div className="mt-14 space-y-16 md:mt-20 md:space-y-24">
-            {projects.map((project, index) => (
-              <Reveal key={project.slug} delay={index * 0.08}>
-                <Link
-                  href={`/work/${project.slug}`}
-                  className="group block border-t border-white/14 pt-6"
-                  aria-label={`Open ${project.title}`}
-                >
-                  <article className="grid gap-8 lg:grid-cols-[minmax(0,0.74fr)_minmax(0,1.26fr)] lg:items-end">
-                    <div>
-                      <p className="text-sm text-signal-paper/44">{project.eyebrow}</p>
-                      <h3 className="mt-5 text-3xl leading-[1.08] text-pretty md:text-5xl">
-                        {project.question}
-                      </h3>
-                    </div>
-                    <div className="relative aspect-[16/10] overflow-hidden rounded-brand bg-ink-850 shadow-image-edge">
-                      <Image
-                        src={project.image}
-                        alt={project.alt}
-                        fill
-                        sizes="(min-width: 1024px) 60vw, 100vw"
-                        className="object-cover transition duration-700 group-hover:scale-[1.035]"
-                        priority={index === 0}
-                      />
-                      <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 bg-black/58 p-5 backdrop-blur-sm md:p-7">
-                        <div>
-                          <p className={`text-sm transition-colors duration-500 ${accentText}`}>Reveal</p>
-                          <p className="mt-1 font-display text-3xl leading-none text-white md:text-5xl">
-                            {project.title}
-                          </p>
-                        </div>
-                        <span className={`grid h-11 w-11 shrink-0 place-items-center rounded-brand border border-white/18 transition-all duration-500 ${accentText} ${groupHoverAccentBg} group-hover:text-ink-950`}>
-                          <ArrowRight aria-hidden="true" size={20} />
-                        </span>
-                      </div>
-                    </div>
-                  </article>
-                </Link>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="border-y border-white/10 bg-signal-paper px-4 py-24 text-ink-950 md:px-8 md:py-32">
-        <div className="mx-auto max-w-[1500px]">
-          <Reveal>
-            <p className="mb-4 text-sm text-ink-950/58">Selected Experience</p>
-            <h2 className="max-w-4xl text-5xl leading-none md:text-7xl">Other places the questions went.</h2>
-          </Reveal>
-
-          <div className="mt-14 divide-y divide-ink-950/14 border-y border-ink-950/14">
-            {experience.map((item) => (
-              <Reveal key={item.title}>
-                <article className="grid gap-3 py-7 md:grid-cols-[0.8fr_1.2fr] md:items-baseline">
-                  <h3 className="text-2xl md:text-4xl">{item.title}</h3>
-                  <p className="max-w-3xl text-lg leading-relaxed text-ink-950/68 md:text-xl">{item.detail}</p>
-                </article>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
       <section className="px-4 py-24 md:px-8 md:py-36">
-        <Reveal className="mx-auto flex max-w-[1500px] flex-col gap-8 md:flex-row md:items-end md:justify-between">
-          <div>
-            <p className="text-2xl text-signal-paper/58">Still here?</p>
-            <h2 className="mt-3 max-w-4xl text-6xl leading-none text-balance md:text-8xl">
-              Let&apos;s make something interesting.
-            </h2>
-          </div>
+        <Reveal className="mx-auto flex max-w-[1500px] flex-col items-center text-center">
+          <p className="mb-8 text-2xl text-signal-paper/60 md:text-3xl">Enough about my obsessions.</p>
           <Link
-            href="/contact"
-            className={`inline-flex w-fit items-center gap-3 rounded-brand border ${accentBorder} ${accentBg} px-5 py-4 text-lg text-ink-950 transition-colors duration-500 hover:bg-signal-paper hover:border-signal-paper`}
+            href="/work"
+            className={`inline-flex w-fit items-center gap-3 rounded-brand border ${accentBorder} ${accentBg} px-6 py-5 text-xl text-ink-950 transition-colors duration-500 hover:bg-signal-paper hover:border-signal-paper`}
           >
-            Start the conversation
-            <ExternalLink aria-hidden="true" size={20} />
+            Okay, I'm sure you'd like to see my actual work now.
+            <ArrowRight aria-hidden="true" size={24} />
           </Link>
         </Reveal>
       </section>
@@ -196,11 +110,10 @@ function ObsessionsCarousel({
 }) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Auto-play interval that resets whenever the currentIndex changes
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % obsessions.length);
-    }, 4500); // Changes every 4.5 seconds
+    }, 4500); 
 
     return () => clearInterval(timer);
   }, [currentIndex]);
@@ -210,7 +123,6 @@ function ObsessionsCarousel({
 
   return (
     <div className="mt-12 md:mt-20">
-      {/* Clickable Dashed Progress Bar */}
       <div className="mb-10 flex items-center gap-2 border-b border-white/10 pb-8">
         {obsessions.map((_, idx) => (
           <button
@@ -305,41 +217,21 @@ function CorporateHome() {
         <p className="mt-6 max-w-2xl text-xl leading-relaxed">
           A motivated candidate with experience across marketing, communications, research and creative problem-solving.
         </p>
-        <a
-          href="#work"
-          className="mt-8 inline-block border border-signal-blue bg-signal-blue px-5 py-3 text-white"
-        >
-          View professional projects
-        </a>
       </section>
 
-      <section className="mx-auto max-w-5xl border-b border-neutral-300 py-12">
+      <section className="mx-auto max-w-5xl py-12">
         <h2 className="text-3xl">Key Interests</h2>
         <ul className="mt-5 list-disc space-y-2 pl-6 text-lg">
           {obsessions.map((item) => (
             <li key={item.title}>{item.title}</li>
           ))}
         </ul>
-      </section>
-
-      <section id="work" className="mx-auto max-w-5xl border-b border-neutral-300 py-12">
-        <h2 className="text-3xl">Selected Professional Work</h2>
-        <div className="mt-6 space-y-6">
-          {projects.map((project) => (
-            <article key={project.slug} className="border border-neutral-300 p-5">
-              <h3 className="text-2xl">{project.corporateTitle}</h3>
-              <p className="mt-3 text-lg">
-                Project delivered strategic recommendations through research, communication planning and stakeholder-focused creative outputs.
-              </p>
-              <Link
-                href={`/work/${project.slug}`}
-                className="mt-4 inline-block border border-signal-blue bg-signal-blue px-4 py-2 text-white"
-              >
-                Read case study
-              </Link>
-            </article>
-          ))}
-        </div>
+        <Link
+          href="/work"
+          className="mt-12 inline-block border border-signal-blue bg-signal-blue px-5 py-3 text-white"
+        >
+          View professional portfolio
+        </Link>
       </section>
     </main>
   );

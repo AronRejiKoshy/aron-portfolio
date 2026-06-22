@@ -71,8 +71,6 @@ export function ContactPage() {
         <div>
           <p className="text-sm text-signal-lime">Contact</p>
           <h1 className="mt-5 max-w-5xl text-6xl leading-none text-balance md:text-8xl lg:text-[9rem]">
-            Still here?
-            <br />
             Let&apos;s make something interesting.
           </h1>
         </div>

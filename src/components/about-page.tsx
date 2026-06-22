@@ -1,7 +1,5 @@
 "use client";
 
-import { ArrowRight } from "lucide-react";
-import Link from "next/link";
 import { useCorporateMode } from "@/components/corporate-mode";
 import { Reveal } from "@/components/reveal";
 import { lessons } from "@/data/content";
@@ -78,16 +76,6 @@ export function AboutPage() {
             I also graduated with First Class Honours in Media &amp; Communications from the University of Greenwich.
           </p>
         </Reveal>
-      </section>
-
-      <section className="mx-auto mt-24 max-w-[1500px]">
-        <Link
-          href="/contact"
-          className="inline-flex items-center gap-3 rounded-brand border border-signal-lime bg-signal-lime px-5 py-4 text-lg text-ink-950 transition hover:bg-signal-paper"
-        >
-          Give me a strange brief
-          <ArrowRight aria-hidden="true" size={20} />
-        </Link>
       </section>
     </main>
   );

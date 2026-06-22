@@ -8,8 +8,7 @@ import { type ReactNode } from "react";
 import { useCorporateMode } from "@/components/corporate-mode";
 
 const nav = [
-  { href: "/", label: "Start" },
-  { href: "/#work", label: "Work" },
+  { href: "/work", label: "Work" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
 ];
@@ -90,9 +89,7 @@ export function SiteChrome({ children }: { children: ReactNode }) {
           <nav aria-label="Main navigation" className="flex items-center gap-1">
             <AnimatePresence>
               {nav.map((item, index) => {
-                const active = item.href === "/" ? pathname === "/" : pathname === item.href;
-                
-                // Show navigation if we are NOT on the homepage, or if we ARE on the homepage and have scrolled down
+                const active = pathname.startsWith(item.href);
                 const showNav = corporate || pathname !== "/" || isScrolled;
 
                 return (
