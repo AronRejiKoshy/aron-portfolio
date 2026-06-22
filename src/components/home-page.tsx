@@ -44,9 +44,9 @@ export function HomePage() {
               I ask questions until something interesting happens.
             </p>
             <p className="mt-8 max-w-2xl text-xl leading-relaxed text-signal-paper/72 md:text-2xl">
-              <span className="block">Sometimes that becomes a campaign.</span>
-              <span className="block">Sometimes it becomes a board game.</span>
-              <span className="block">Sometimes it becomes a problem for everyone involved.</span>
+              <span className="block">Sometimes it becomes a campaign.</span>
+              <span className="block">Sometimes it becomes a website or a board game.</span>
+              <span className="block">Most of the times it becomes a problem for everyone involved.</span>
             </p>
           </motion.div>
         </div>
@@ -90,7 +90,7 @@ export function HomePage() {
             href="/work"
             className={`inline-flex w-fit items-center gap-3 rounded-brand border ${accentBorder} ${accentBg} px-6 py-5 text-xl text-ink-950 transition-colors duration-500 hover:bg-signal-paper hover:border-signal-paper`}
           >
-            Okay, I'm sure you'd like to see my actual work now.
+            I'm sure you'd like to see my actual work now.
             <ArrowRight aria-hidden="true" size={24} />
           </Link>
         </Reveal>

@@ -89,8 +89,7 @@ export function ProjectPage({ project }: ProjectPageProps) {
                         />
                         <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 bg-black/58 p-5 backdrop-blur-sm md:p-7">
                           <div>
-                            <p className={`text-sm transition-colors duration-500 ${accentText}`}>Reveal</p>
-                            <p className="mt-1 font-display text-3xl leading-none text-white md:text-5xl">
+                            <p className="font-display text-3xl leading-none text-white md:text-5xl">
                               {proj.title}
                             </p>
                           </div>

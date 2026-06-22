@@ -61,7 +61,7 @@ export const projects: Project[] = [
     question: "How much of our judgement comes from evidence, and how much comes from perception?",
     image: "/work/face-value.png",
     alt: "A dark exhibition table with board game cards, evidence tokens and identity tags.",
-    eyebrow: "Board game / Consumer culture",
+    eyebrow: "Board game / Unconscious Bias",
     summary:
       "A social deduction board game exploring how brands influence assumptions, identity signalling and unconscious bias.",
     problem:
@@ -86,7 +86,7 @@ export const projects: Project[] = [
     question: "Can a cup of tea make a stranger feel less alone?",
     image: "/work/twinings-loneliness.png",
     alt: "A warm evening table with tea cups, cards and people in conversation around the edges.",
-    eyebrow: "Campaign thinking / Ritual",
+    eyebrow: "Campaign Development / Touchpoints",
     summary:
       "A campaign concept where Twinings becomes a ritual for connection through gameplay and conversation-led experiences.",
     problem:
@@ -111,7 +111,7 @@ export const projects: Project[] = [
     question: "What happens when important language is forbidden?",
     image: "/work/what-do-you-call.png",
     alt: "A redacted mixed-media poster with coded symbols, medical imagery and digital screen layers.",
-    eyebrow: "Culture / Censorship",
+    eyebrow: "Censorship / Social Media Culture",
     summary:
       "A culturally driven language system for women’s health conversations that need to survive moderation filters.",
     problem:
