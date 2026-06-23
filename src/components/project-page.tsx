@@ -1,11 +1,13 @@
 "use client";
 
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowLeft, ArrowRight, Plus, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect } from "react";
 import { useCorporateMode } from "@/components/corporate-mode";
 import { Reveal } from "@/components/reveal";
-import { type Project, projects, experience } from "@/data/content";
+import { type Project, projects, experience, type Experience } from "@/data/content";
 
 type ProjectPageProps = {
   project?: Project; // This is now optional
@@ -13,6 +15,7 @@ type ProjectPageProps = {
 
 export function ProjectPage({ project }: ProjectPageProps) {
   const { corporate, spotifyMode } = useCorporateMode();
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   const accentText = spotifyMode ? "text-[#1DB954]" : "text-signal-lime";
   const groupHoverAccentBg = spotifyMode ? "group-hover:bg-[#1DB954]" : "group-hover:bg-signal-lime";
@@ -53,7 +56,6 @@ export function ProjectPage({ project }: ProjectPageProps) {
           <div className="mx-auto max-w-[1500px]">
             <Reveal className="flex flex-col justify-between gap-8 md:flex-row md:items-end">
               <div>
-                <p className={`mb-4 text-sm transition-colors duration-500 ${accentText}`}>Featured Work</p>
                 <h1 className="max-w-5xl text-5xl leading-[0.98] text-balance md:text-7xl lg:text-8xl">
                   Evidence of my curiosity.
                 </h1>
@@ -83,6 +85,7 @@ export function ProjectPage({ project }: ProjectPageProps) {
                           src={proj.image}
                           alt={proj.alt}
                           fill
+                          quality={100}
                           sizes="(min-width: 1024px) 60vw, 100vw"
                           className="object-cover transition duration-700 group-hover:scale-[1.035]"
                           priority={index === 0}
@@ -106,20 +109,16 @@ export function ProjectPage({ project }: ProjectPageProps) {
           </div>
         </section>
 
-        <section className="border-t border-white/10 bg-signal-paper px-4 py-24 text-ink-950 md:px-8 md:py-32">
+        <section className="border-t border-white/10 px-4 py-24 md:px-8 md:py-32">
           <div className="mx-auto max-w-[1500px]">
             <Reveal>
-              <p className="mb-4 text-sm text-ink-950/58">Selected Experience</p>
               <h2 className="max-w-4xl text-5xl leading-none md:text-7xl">Other places the questions went.</h2>
             </Reveal>
 
-            <div className="mt-14 divide-y divide-ink-950/14 border-y border-ink-950/14">
+            <div className="mt-14 border-t border-white/14">
               {experience.map((item) => (
                 <Reveal key={item.title}>
-                  <article className="grid gap-3 py-7 md:grid-cols-[0.8fr_1.2fr] md:items-baseline">
-                    <h3 className="text-2xl md:text-4xl">{item.title}</h3>
-                    <p className="max-w-3xl text-lg leading-relaxed text-ink-950/68 md:text-xl">{item.detail}</p>
-                  </article>
+                  <ExperienceItem item={item} accentText={accentText} />
                 </Reveal>
               ))}
             </div>
@@ -148,17 +147,17 @@ export function ProjectPage({ project }: ProjectPageProps) {
             className="inline-flex items-center gap-2 text-sm text-signal-paper/56 transition hover:text-signal-lime"
           >
             <ArrowLeft aria-hidden="true" size={16} />
-            Back to portfolio
+            Take me back to Aron&apos;s work
           </Link>
 
           <Reveal className="mt-12">
             <p className="text-sm text-signal-lime">{project.eyebrow}</p>
-            <h1 className="mt-5 max-w-6xl text-5xl leading-[1.02] text-balance md:text-7xl lg:text-8xl">
+            <p className="mt-6 max-w-4xl text-2xl leading-snug text-signal-paper/70 md:text-4xl">
               {project.question}
-            </h1>
-            <p className="mt-8 font-display text-4xl leading-none text-signal-paper/42 md:text-7xl">
-              {project.title}
             </p>
+            <h1 className="mt-6 font-display text-6xl leading-none text-white md:text-8xl lg:text-[10rem]">
+              {project.title}
+            </h1>
           </Reveal>
 
           <Reveal className="mt-12">
@@ -167,6 +166,7 @@ export function ProjectPage({ project }: ProjectPageProps) {
                 src={project.image}
                 alt={project.alt}
                 fill
+                quality={100}
                 sizes="100vw"
                 priority
                 className="object-cover"
@@ -205,24 +205,28 @@ export function ProjectPage({ project }: ProjectPageProps) {
           </Reveal>
 
           <div className="mt-10 grid gap-5 md:grid-cols-3">
-            {project.gallery.map((caption, galleryIndex) => (
-              <Reveal key={caption} delay={galleryIndex * 0.07}>
-                <figure className="overflow-hidden rounded-brand border border-white/10 bg-ink-850">
+            {project.gallery.map((item, galleryIndex) => (
+              <Reveal key={item.caption} delay={galleryIndex * 0.07}>
+                <figure 
+                  className="group cursor-zoom-in overflow-hidden rounded-brand border border-white/10 bg-ink-850"
+                  onClick={() => setSelectedImage(item.image)}
+                >
                   <div className="relative aspect-[4/3]">
                     <Image
-                      src={project.image}
+                      src={item.image}
                       alt=""
                       fill
+                      quality={100}
                       sizes="(min-width: 768px) 33vw, 100vw"
-                      className="object-cover"
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
                       style={{
                         objectPosition:
-                          galleryIndex === 0 ? "center" : galleryIndex === 1 ? "35% 50%" : "70% 50%",
+                          galleryIndex === 0 ? "top" : galleryIndex === 1 ? "top" : "center",
                       }}
                     />
                   </div>
-                  <figcaption className="min-h-28 p-5 text-lg leading-relaxed text-signal-paper/68">
-                    {caption}
+                  <figcaption className="min-h-28 p-5 text-lg leading-relaxed text-signal-paper/68 transition-colors group-hover:text-white">
+                    {item.caption}
                   </figcaption>
                 </figure>
               </Reveal>
@@ -232,19 +236,59 @@ export function ProjectPage({ project }: ProjectPageProps) {
       </section>
 
       <section className="border-t border-white/10 px-4 py-16 md:px-8">
-        <div className="mx-auto flex max-w-[1500px] flex-col gap-6 md:flex-row md:items-center md:justify-between">
-          <Link href="/about" className="text-signal-paper/58 transition hover:text-signal-lime">
-            Read about Aron
-          </Link>
+        <div className="mx-auto flex max-w-[1500px] justify-end">
           <Link
             href={`/work/${nextProject.slug}`}
-            className="inline-flex items-center gap-3 text-2xl transition hover:text-signal-lime"
+            className="group inline-flex max-w-3xl items-center gap-5 text-right transition"
           >
-            Next question: {nextProject.title}
-            <ArrowRight aria-hidden="true" size={22} />
+            <div className="flex flex-col items-end">
+              <span className="mb-2 text-sm text-signal-paper/58">Next question</span>
+              <span className="text-2xl leading-tight text-signal-paper transition-colors group-hover:text-signal-lime md:text-4xl">
+                {nextProject.question}
+              </span>
+            </div>
+            <ArrowRight aria-hidden="true" size={32} className="shrink-0 text-signal-paper/58 transition-colors group-hover:text-signal-lime" />
           </Link>
         </div>
       </section>
+
+      {/* Lightbox Modal */}
+      <AnimatePresence>
+        {selectedImage && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSelectedImage(null)}
+            className="fixed inset-0 z-50 flex cursor-zoom-out items-center justify-center bg-black/90 p-4 backdrop-blur-sm md:p-10"
+          >
+            <button
+              onClick={() => setSelectedImage(null)}
+              className="absolute right-6 top-6 z-50 rounded-full bg-white/10 p-3 text-white transition-colors hover:bg-white/20"
+              aria-label="Close image"
+            >
+              <X size={24} />
+            </button>
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              className="relative h-full w-full max-h-[90vh] max-w-[90vw]"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <Image
+                src={selectedImage}
+                alt="Enlarged gallery view"
+                fill
+                quality={100}
+                className="object-contain"
+                sizes="90vw"
+              />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </main>
   );
 }
@@ -254,9 +298,117 @@ function ProjectBlock({ title, body }: { title: string; body: string }) {
     <Reveal>
       <article className="min-h-64 rounded-brand border border-white/10 bg-white/[0.035] p-6">
         <h2 className="text-sm text-signal-lime">{title}</h2>
-        <p className="mt-5 text-xl leading-relaxed text-signal-paper/76">{body}</p>
+        <div 
+          className="mt-5 text-xl leading-relaxed text-signal-paper/76 [&_a:hover]:underline [&_a]:text-signal-lime [&_a]:transition-colors [&_i]:text-white"
+          dangerouslySetInnerHTML={{ __html: body }}
+        />
       </article>
     </Reveal>
+  );
+}
+
+function ExperienceItem({ item, accentText }: { item: Experience; accentText: string }) {
+  const [isOpen, setIsOpen] = useState(false);
+  const [currentImage, setCurrentImage] = useState(0);
+
+  useEffect(() => {
+    if (!isOpen || !item.images) return;
+    
+    const timer = setInterval(() => {
+      setCurrentImage((prev) => (prev + 1) % item.images!.length);
+    }, 3000); 
+    
+    return () => clearInterval(timer);
+  }, [isOpen, item.images]);
+
+  return (
+    <div className="border-b border-white/14">
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="group flex w-full items-center justify-between py-7 text-left outline-none"
+        aria-expanded={isOpen}
+      >
+        <div className="flex items-center gap-4">
+          <h3 className={`text-2xl transition-colors duration-300 md:text-4xl ${item.isWip ? "text-signal-paper/60 group-hover:text-signal-lime" : "group-hover:text-white"}`}>
+            {item.title}
+          </h3>
+          {item.isWip && (
+            <span className="hidden rounded-full border border-signal-lime/40 bg-signal-lime/10 px-2 py-1 text-[10px] font-medium tracking-widest text-signal-lime sm:inline-block">
+              IN PROGRESS
+            </span>
+          )}
+        </div>
+        <motion.span
+          animate={{ rotate: isOpen ? 45 : 0 }}
+          transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+          className={`ml-4 shrink-0 rounded-full border border-white/18 p-2 transition-colors duration-300 group-hover:border-white/30 ${
+            isOpen ? accentText : "text-signal-paper/40"
+          }`}
+        >
+          <Plus aria-hidden="true" size={20} />
+        </motion.span>
+      </button>
+      <AnimatePresence initial={false}>
+        {isOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+            className="overflow-hidden"
+          >
+            <div className="pb-7">
+              <p className={`max-w-3xl text-lg leading-relaxed md:text-xl ${item.isWip ? "text-signal-paper/40" : "text-signal-paper/68"}`}>
+                {item.detail}
+              </p>
+              
+              {/* Optional Fading Image Carousel */}
+              {item.images && item.images.length > 0 && (
+                <div className="relative mt-6 aspect-[16/9] w-full max-w-2xl overflow-hidden rounded-brand border border-white/10 bg-ink-850">
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={currentImage}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.8 }}
+                      className="absolute inset-0"
+                    >
+                      <Image
+                        src={item.images[currentImage]}
+                        alt={`${item.title} image ${currentImage + 1}`}
+                        fill
+                        quality={100}
+                        className="object-contain"
+                        sizes="(min-width: 768px) 42rem, 100vw"
+                      />
+                    </motion.div>
+                  </AnimatePresence>
+                </div>
+              )}
+
+              {/* Links */}
+              {item.links && item.links.length > 0 && (
+                <div className="mt-6 flex flex-wrap gap-4">
+                  {item.links.map((link) => (
+                    <a
+                      key={link.url}
+                      href={link.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 rounded-brand border border-white/18 bg-white/5 px-4 py-2 text-sm text-signal-paper transition-colors duration-300 hover:border-signal-lime hover:text-signal-lime"
+                    >
+                      {link.label}
+                      <ArrowRight aria-hidden="true" size={14} className="-rotate-45" />
+                    </a>
+                  ))}
+                </div>
+              )}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
   );
 }
 

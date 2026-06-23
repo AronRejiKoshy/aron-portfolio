@@ -11,13 +11,21 @@ export type Project = {
   insight: string;
   solution: string;
   outcome: string;
-  gallery: string[];
+  gallery: { image: string; caption: string }[];
   tags: string[];
 };
 
 export type Obsession = {
   title: string;
   description: string;
+};
+
+export type Experience = {
+  title: string;
+  detail: string;
+  links?: { label: string; url: string }[];
+  images?: string[];
+  isWip?: boolean;
 };
 
 export const email = "hello@aron.studio";
@@ -59,9 +67,9 @@ export const projects: Project[] = [
     title: "FACE VALUE",
     corporateTitle: "Consumer Perception Research Initiative",
     question: "How much of our judgement comes from evidence, and how much comes from perception?",
-    image: "/work/face-value.png",
+    image: "/work/face-value-hero.png",
     alt: "A dark exhibition table with board game cards, evidence tokens and identity tags.",
-    eyebrow: "Board game / Unconscious Bias",
+    eyebrow: "Unconscious Bias / Board Game",
     summary:
       "A social deduction board game exploring how brands influence assumptions, identity signalling and unconscious bias.",
     problem:
@@ -69,13 +77,22 @@ export const projects: Project[] = [
     insight:
       "A brand can behave like evidence even when it is only atmosphere. Put people in a game and that shortcut becomes visible very quickly.",
     solution:
-      "FACE VALUE turns brand signals into playable suspicion. Players read evidence, misread each other and discover how quickly confidence can become bias.",
+      "<i>Face Value</i> turns brand signals into playable suspicion. Players read evidence, misread each other and discover how quickly confidence can become bias.",
     outcome:
-      "Developed as Aron’s hero project and exhibited at the University of Greenwich End of Year Show 2026.",
+      "Developed as Aron’s advanced project and exhibited at the University of Greenwich End of Year Show 2026.<br><br><a href='https://aronrejikoshy.github.io/face-value-portfolio/' target='_blank' rel='noopener noreferrer'>View the project portfolio</a> <span class='text-sm text-signal-paper/40 ml-2'>(Best viewed on desktop)</span>",
     gallery: [
-      "Signals that look objective until someone has to defend them.",
-      "Cards, roles and accusations designed to make assumptions feel playable.",
-      "A museum-like setup for a subject that usually hides in everyday judgement.",
+      {
+        image: "/work/face-value-gal-1.png",
+        caption: "A structured sequence of rounds designed to escalate tension as evidence is recovered."
+      },
+      {
+        image: "/work/face-value-gal-2.png",
+        caption: "Parameters defining how information can be shared, concealed, or weaponised."
+      },
+      {
+        image: "/work/face-value-gal-3.png",
+        caption: "A physical translation of the game's mechanics into an interactive board game."
+      }
     ],
     tags: ["Speculative Design", "Board Games", "Brand Behaviour"],
   },
@@ -84,23 +101,32 @@ export const projects: Project[] = [
     title: "TWININGS x LONELINESS",
     corporateTitle: "Tea-Led Community Engagement Concept",
     question: "Can a cup of tea make a stranger feel less alone?",
-    image: "/work/twinings-loneliness.png",
+    image: "/work/twinings-hero.png",
     alt: "A warm evening table with tea cups, cards and people in conversation around the edges.",
     eyebrow: "Campaign Development / Touchpoints",
     summary:
       "A campaign concept where Twinings becomes a ritual for connection through gameplay and conversation-led experiences.",
     problem:
-      "Young adults are surrounded by contact but still miss the smaller rituals that make closeness feel easy.",
+      "Legacy tea brands sell heritage to a generation facing a profound loneliness crisis. Today, a massive percentage of tea is consumed completely alone. The beverage of gathering has become a symbol of isolation.",
     insight:
-      "Connection often begins before the big conversation. It starts with a shared pause, a repeated gesture and something warm between two people.",
+      "Real connection rarely starts with a heavy conversation, it starts with a shared pause. Tea naturally enforces a slow, low-pressure ritual. It speaks a language of cosiness and calm that makes people feel safe enough to open up.",
     solution:
-      "Twinings becomes the host: tea, prompts, small games and conversation-led experiences that give people a reason to stay a little longer.",
+      "The strategy repositioned Twinings from a product to a host. The experience launched within an immersive Minecraft world where players had to team up and communicate to progress. This digital collaboration then bridged into the real world through physical touchpoints: direct-mail invitations, pop-up community spaces, and tea tags printed with conversation starters.",
     outcome:
-      "A brand experience built around ritual rather than noise, designed to make connection feel less like a performance.",
+      "A socially perceptive campaign that successfully merged virtual gameplay with physical interaction. It proved that a legacy brand can make a genuine impact on social issues, far beyond its core product.<br><br><span class='text-sm text-signal-paper/50'><i>Developed as a collaborative group project for the Brand Worldbuilding module at University of Greenwich.</i></span>",
     gallery: [
-      "Tea as permission to slow down.",
-      "Prompt-led games that create low-pressure beginnings.",
-      "A brand behaving more like a host than a billboard.",
+      {
+        image: "/work/twinings-gal-1.png",
+        caption: "Obstacles that require players to coordinate and communicate to unlock the path ahead."
+      },
+      {
+        image: "/work/twinings-gal-2.png",
+        caption: "In-game Turkish inspired tea rooms designed as low-pressure spaces for players to pause and connect over culture."
+      },
+      {
+        image: "/work/twinings-gal-3.png",
+        caption: "Personalised tea tags acting as physical prompts to carry the conversation offline."
+      }
     ],
     tags: ["Brand Experience", "Campaign", "Human Behaviour"],
   },
@@ -121,36 +147,63 @@ export const projects: Project[] = [
     solution:
       "A language system of coded terms, visual cues and cultural shorthand that keeps conversations alive without making them smaller.",
     outcome:
-      "A speculative campaign that treats censorship as a creative constraint and asks who gets to name their own body.",
+      "A speculative campaign that treats censorship as a creative constraint and asks who gets to name their own body.<br><br><span class='text-sm text-signal-paper/50'><i>Developed as a collaborative group project for D&AD New Blood.</i></span>",
     gallery: [
-      "Redaction as both obstacle and visual language.",
-      "Coded phrases designed to move faster than filters.",
-      "A serious subject carried with cultural fluency instead of clinical distance.",
+      {
+        image: "/work/censorship-gal-1.png",
+        caption: "Redaction as both obstacle and visual language."
+      },
+      {
+        image: "/work/censorship-gal-2.png",
+        caption: "Coded phrases designed to move faster than filters."
+      },
+      {
+        image: "/work/censorship-gal-3.png",
+        caption: "A serious subject carried with cultural fluency instead of clinical distance."
+      }
     ],
     tags: ["Speculative Design", "Women's Health", "Digital Culture"],
   },
 ];
 
-export const experience = [
+export const experience: Experience[] = [
   {
-    title: "Cray Valley PM FC",
+    title: "How do you make a collectible survive past the unboxing?",
     detail:
-      "Local football, matchday attention and the strange magic of getting people to care before kick-off.",
+      "Traditional collectibles often lose engagement the second the box is opened. For Pokémon Catchables, the insight was that young audiences seek emotional interaction and self-expression, not just another static trading card. The solution transformed physical toys into interactive companions, pairing reusable physical eggs with a connected digital experience to build a new generation of collectors.",
+    links: [
+      { label: "View Digital Experience", url: "https://catchables.netlify.app" }
+    ],
+    images: [
+      "/work/experience/pokemon-1.png",
+      "/work/experience/pokemon-2.png",
+      "/work/experience/pokemon-3.png",
+      "/work/experience/pokemon-4.png"
+    ]
   },
   {
-    title: "Head of Marketing, Cinematic Arts Society",
+    title: "How do you make people care about non-league football before kick-off?",
     detail:
-      "Built the invitation around the feeling of watching films with people who argue about them afterwards.",
+      "Working in matchday media for Cray Valley PM FC taught me that local football isn't about glamour, it's about grit. I focused on capturing that raw Saturday tension for the community. Whether you're working for a local club or a Premier League giant, the job is exactly the same: translating the 90 minutes into narratives that rival the big leagues and making people care before the whistle blows.",
+    links: [
+      { label: "Instagram", url: "https://www.instagram.com/crayvalleypm/" },
+      { label: "X (Twitter)", url: "https://x.com/CrayValleyPM" }
+    ]
   },
   {
-    title: "Pokémon Catchables",
+    title: "How do you sell a film society to a screen-fatigued generation?",
     detail:
-      "A playful collecting idea with enough nostalgia to make adults admit they still want the shiny one.",
+      "As Head of Marketing for the Cinematic Arts Society at the University of Greenwich, my role was a lesson in grassroots community building. I designed social media posts, showed up to events, and hustled to get as many bodies through the door as possible. It was a grounded experiment in trying to sell not just the movies, but the social experience of watching them.",
+    links: [
+      { label: "Instagram", url: "https://www.instagram.com/cinematicartsgre/" }
+    ]
   },
   {
-    title: "Other selected projects",
+    title: "Could Cyberpunk 2077 sell products in 202X?",
     detail:
-      "Small experiments, brand thoughts, half-built systems and things that began with: wait, what if?",
+      "An upcoming experiment testing whether dystopian advertising can persuade contemporary consumers. It’s a dive into in-game brand strategy, asking if the hyper-commodified world of Night City holds lessons for real-world campaigns. Currently in the 'obsessive research' phase.",
+    links: [],
+    isWip: true
   },
 ];
 
