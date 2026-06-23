@@ -1,10 +1,10 @@
 "use client";
 
-import { ArrowLeft, ArrowRight, Plus, X } from "lucide-react";
+import { ArrowLeft, ArrowRight, Plus, X, Play, Pause, RotateCcw } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useCorporateMode } from "@/components/corporate-mode";
 import { Reveal } from "@/components/reveal";
 import { type Project, projects, experience, type Experience } from "@/data/content";
@@ -13,12 +13,83 @@ type ProjectPageProps = {
   project?: Project; // This is now optional
 };
 
+// Custom theme logic for specific projects
+const getTheme = (slug?: string, spotifyMode?: boolean) => {
+  if (spotifyMode) {
+    return {
+      color: "#1DB954",
+      text: "text-[#1DB954]",
+      hoverText: "hover:text-[#1DB954]",
+      groupHoverText: "group-hover:text-[#1DB954]",
+      groupHoverBg: "group-hover:bg-[#1DB954]",
+    };
+  }
+
+  switch (slug) {
+    case "face-value":
+      return {
+        color: "#9E4242",
+        text: "text-[#9E4242]",
+        hoverText: "hover:text-[#9E4242]",
+        groupHoverText: "group-hover:text-[#9E4242]",
+        groupHoverBg: "group-hover:bg-[#9E4242]",
+      };
+    case "twinings-loneliness":
+      return {
+        color: "#ffa81f",
+        text: "text-[#ffa81f]",
+        hoverText: "hover:text-[#ffa81f]",
+        groupHoverText: "group-hover:text-[#ffa81f]",
+        groupHoverBg: "group-hover:bg-[#ffa81f]",
+      };
+    case "what-do-you-call":
+      return {
+        color: "#db5e8d",
+        text: "text-[#db5e8d]",
+        hoverText: "hover:text-[#db5e8d]",
+        groupHoverText: "group-hover:text-[#db5e8d]",
+        groupHoverBg: "group-hover:bg-[#db5e8d]",
+      };
+    default:
+      return {
+        color: "#d9ff00", // Default signal-lime
+        text: "text-signal-lime",
+        hoverText: "hover:text-signal-lime",
+        groupHoverText: "group-hover:text-signal-lime",
+        groupHoverBg: "group-hover:bg-signal-lime",
+      };
+  }
+};
+
 export function ProjectPage({ project }: ProjectPageProps) {
   const { corporate, spotifyMode } = useCorporateMode();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  
+  // Video Player State
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
 
-  const accentText = spotifyMode ? "text-[#1DB954]" : "text-signal-lime";
-  const groupHoverAccentBg = spotifyMode ? "group-hover:bg-[#1DB954]" : "group-hover:bg-signal-lime";
+  const togglePlay = () => {
+    if (videoRef.current) {
+      if (isPlaying) {
+        videoRef.current.pause();
+      } else {
+        videoRef.current.play();
+      }
+      setIsPlaying(!isPlaying);
+    }
+  };
+
+  const resetVideo = () => {
+    if (videoRef.current) {
+      videoRef.current.currentTime = 0;
+      videoRef.current.play();
+      setIsPlaying(true);
+    }
+  };
+
+  // Determine active theme based on current project (if rendering case study)
+  const activeTheme = getTheme(project?.slug, spotifyMode);
 
   // ==========================================
   // VIEW 1: WORK OVERVIEW (If no project is passed)
@@ -66,45 +137,44 @@ export function ProjectPage({ project }: ProjectPageProps) {
             </Reveal>
 
             <div className="mt-14 space-y-16 md:mt-24 md:space-y-24">
-              {projects.map((proj, index) => (
-                <Reveal key={proj.slug} delay={index * 0.08}>
-                  <Link
-                    href={`/work/${proj.slug}`}
-                    className="group block border-t border-white/14 pt-6"
-                    aria-label={`Open ${proj.title}`}
-                  >
-                    <article className="grid gap-8 lg:grid-cols-[minmax(0,0.74fr)_minmax(0,1.26fr)] lg:items-end">
-                      <div>
-                        <p className="text-sm text-signal-paper/44">{proj.eyebrow}</p>
-                        <h2 className="mt-5 text-3xl leading-[1.08] text-pretty md:text-5xl">
-                          {proj.question}
-                        </h2>
-                      </div>
-                      <div className="relative aspect-[16/10] overflow-hidden rounded-brand bg-ink-850 shadow-image-edge">
-                        <Image
-                          src={proj.image}
-                          alt={proj.alt}
-                          fill
-                          quality={100}
-                          sizes="(min-width: 1024px) 60vw, 100vw"
-                          className="object-cover transition duration-700 group-hover:scale-[1.035]"
-                          priority={index === 0}
-                        />
-                        <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 bg-black/58 p-5 backdrop-blur-sm md:p-7">
-                          <div>
-                            <p className="font-display text-3xl leading-none text-white md:text-5xl">
-                              {proj.title}
-                            </p>
-                          </div>
-                          <span className={`grid h-11 w-11 shrink-0 place-items-center rounded-brand border border-white/18 transition-all duration-500 ${accentText} ${groupHoverAccentBg} group-hover:text-ink-950`}>
-                            <ArrowRight aria-hidden="true" size={20} />
-                          </span>
+              {projects.map((proj, index) => {
+                const projTheme = getTheme(proj.slug, spotifyMode);
+                return (
+                  <Reveal key={proj.slug} delay={index * 0.08}>
+                    <Link
+                      href={`/work/${proj.slug}`}
+                      className="group block border-t border-white/14 pt-6"
+                      aria-label={`Open ${proj.title}`}
+                    >
+                      <article className="grid gap-8 lg:grid-cols-[minmax(0,0.74fr)_minmax(0,1.26fr)] lg:items-end">
+                        <div>
+                          <p className="text-sm text-signal-paper/44">{proj.eyebrow}</p>
+                          <h2 className="mt-5 text-3xl leading-[1.08] text-pretty md:text-5xl">
+                            {proj.question}
+                          </h2>
                         </div>
-                      </div>
-                    </article>
-                  </Link>
-                </Reveal>
-              ))}
+                        <div className="relative aspect-[16/10] overflow-hidden rounded-brand bg-ink-850 shadow-image-edge">
+                          <Image
+                            src={proj.image}
+                            alt={proj.alt}
+                            fill
+                            quality={100}
+                            sizes="(min-width: 1024px) 60vw, 100vw"
+                            className="object-cover transition duration-700 group-hover:scale-[1.035]"
+                            priority={index === 0}
+                          />
+                          {/* Stripped the blur and title - leaving just the slick hover arrow */}
+                          <div className="absolute inset-x-0 bottom-0 flex justify-end p-5 md:p-7">
+                            <span className={`grid h-11 w-11 shrink-0 place-items-center rounded-brand border border-white/18 transition-all duration-500 text-signal-lime ${projTheme.groupHoverBg} group-hover:text-ink-950 group-hover:border-transparent`}>
+                              <ArrowRight aria-hidden="true" size={20} />
+                            </span>
+                          </div>
+                        </div>
+                      </article>
+                    </Link>
+                  </Reveal>
+                );
+              })}
             </div>
           </div>
         </section>
@@ -118,10 +188,21 @@ export function ProjectPage({ project }: ProjectPageProps) {
             <div className="mt-14 border-t border-white/14">
               {experience.map((item) => (
                 <Reveal key={item.title}>
-                  <ExperienceItem item={item} accentText={accentText} />
+                  <ExperienceItem item={item} accentText={activeTheme.text} />
                 </Reveal>
               ))}
             </div>
+
+            {/* About Page Teaser */}
+            <Reveal className="mt-28 flex justify-center">
+              <Link
+                href="/about"
+                className="group inline-flex items-center gap-4 rounded-full border border-white/14 bg-white/5 px-8 py-4 text-lg text-signal-paper transition-all hover:border-signal-lime hover:text-signal-lime"
+              >
+                <span>I take it you&apos;re still curious <i>about me</i></span>
+                <ArrowRight size={20} className="transition-transform duration-300 group-hover:translate-x-1" />
+              </Link>
+            </Reveal>
           </div>
         </section>
       </main>
@@ -133,6 +214,7 @@ export function ProjectPage({ project }: ProjectPageProps) {
   // ==========================================
   const index = projects.findIndex((item) => item.slug === project.slug);
   const nextProject = projects[(index + 1) % projects.length];
+  const nextTheme = getTheme(nextProject.slug, spotifyMode);
 
   if (corporate) {
     return <CorporateProject project={project} nextProject={nextProject} />;
@@ -144,14 +226,14 @@ export function ProjectPage({ project }: ProjectPageProps) {
         <div className="mx-auto max-w-[1500px]">
           <Link
             href="/work"
-            className="inline-flex items-center gap-2 text-sm text-signal-paper/56 transition hover:text-signal-lime"
+            className={`inline-flex items-center gap-2 text-sm text-signal-paper/56 transition ${activeTheme.hoverText}`}
           >
             <ArrowLeft aria-hidden="true" size={16} />
             Take me back to Aron&apos;s work
           </Link>
 
           <Reveal className="mt-12">
-            <p className="text-sm text-signal-lime">{project.eyebrow}</p>
+            <p className={`text-sm ${activeTheme.text}`}>{project.eyebrow}</p>
             <p className="mt-6 max-w-4xl text-2xl leading-snug text-signal-paper/70 md:text-4xl">
               {project.question}
             </p>
@@ -161,16 +243,50 @@ export function ProjectPage({ project }: ProjectPageProps) {
           </Reveal>
 
           <Reveal className="mt-12">
-            <div className="relative aspect-[16/9] overflow-hidden rounded-brand bg-ink-850 shadow-image-edge">
-              <Image
-                src={project.image}
-                alt={project.alt}
-                fill
-                quality={100}
-                sizes="100vw"
-                priority
-                className="object-cover"
-              />
+            <div className="group relative aspect-[16/9] overflow-hidden rounded-brand bg-ink-850 shadow-image-edge">
+              {project.video ? (
+                <>
+                  <video
+                    ref={videoRef}
+                    src={project.video}
+                    poster={project.image}
+                    className="h-full w-full object-cover cursor-pointer"
+                    playsInline
+                    onClick={togglePlay}
+                    onEnded={() => setIsPlaying(false)}
+                  />
+                  {/* Custom Controls UI */}
+                  <div className="absolute bottom-6 left-0 right-0 flex justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                    <div className="flex items-center gap-4 rounded-full border border-white/10 bg-black/60 px-6 py-3 backdrop-blur-md">
+                      <button 
+                        onClick={togglePlay} 
+                        className={`text-white transition-colors ${activeTheme.hoverText} focus:outline-none`}
+                        aria-label={isPlaying ? "Pause" : "Play"}
+                      >
+                        {isPlaying ? <Pause size={24} /> : <Play size={24} className="ml-1" />}
+                      </button>
+                      <div className="h-5 w-px bg-white/20"></div>
+                      <button 
+                        onClick={resetVideo} 
+                        className={`text-white transition-colors ${activeTheme.hoverText} focus:outline-none`}
+                        aria-label="Reset video"
+                      >
+                        <RotateCcw size={22} />
+                      </button>
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <Image
+                  src={project.image}
+                  alt={project.alt}
+                  fill
+                  quality={100}
+                  sizes="100vw"
+                  priority
+                  className="object-cover"
+                />
+              )}
             </div>
           </Reveal>
         </div>
@@ -183,25 +299,18 @@ export function ProjectPage({ project }: ProjectPageProps) {
           </Reveal>
 
           <div className="grid gap-5 md:grid-cols-2">
-            <ProjectBlock title="Problem" body={project.problem} />
-            <ProjectBlock title="Insight" body={project.insight} />
-            <ProjectBlock title="Solution" body={project.solution} />
-            <ProjectBlock title="Outcome" body={project.outcome} />
+            <ProjectBlock title="Problem" body={project.problem} themeColor={activeTheme.color} />
+            <ProjectBlock title="Insight" body={project.insight} themeColor={activeTheme.color} />
+            <ProjectBlock title="Solution" body={project.solution} themeColor={activeTheme.color} />
+            <ProjectBlock title="Outcome" body={project.outcome} themeColor={activeTheme.color} />
           </div>
         </div>
       </section>
 
       <section className="px-4 py-20 md:px-8 md:py-28">
         <div className="mx-auto max-w-[1500px]">
-          <Reveal className="flex flex-col justify-between gap-5 md:flex-row md:items-end">
+          <Reveal>
             <h2 className="text-5xl leading-none md:text-7xl">Gallery</h2>
-            <div className="flex flex-wrap gap-2">
-              {project.tags.map((tag) => (
-                <span key={tag} className="rounded-brand border border-white/14 px-3 py-2 text-sm text-signal-paper/62">
-                  {tag}
-                </span>
-              ))}
-            </div>
           </Reveal>
 
           <div className="mt-10 grid gap-5 md:grid-cols-3">
@@ -243,11 +352,11 @@ export function ProjectPage({ project }: ProjectPageProps) {
           >
             <div className="flex flex-col items-end">
               <span className="mb-2 text-sm text-signal-paper/58">Next question</span>
-              <span className="text-2xl leading-tight text-signal-paper transition-colors group-hover:text-signal-lime md:text-4xl">
+              <span className={`text-2xl leading-tight text-signal-paper transition-colors ${nextTheme.groupHoverText} md:text-4xl`}>
                 {nextProject.question}
               </span>
             </div>
-            <ArrowRight aria-hidden="true" size={32} className="shrink-0 text-signal-paper/58 transition-colors group-hover:text-signal-lime" />
+            <ArrowRight aria-hidden="true" size={32} className={`shrink-0 text-signal-paper/58 transition-colors ${nextTheme.groupHoverText}`} />
           </Link>
         </div>
       </section>
@@ -293,13 +402,17 @@ export function ProjectPage({ project }: ProjectPageProps) {
   );
 }
 
-function ProjectBlock({ title, body }: { title: string; body: string }) {
+// Passed dynamic themeColor to drive inline CSS variables for the links
+function ProjectBlock({ title, body, themeColor }: { title: string; body: string; themeColor: string }) {
   return (
     <Reveal>
-      <article className="min-h-64 rounded-brand border border-white/10 bg-white/[0.035] p-6">
-        <h2 className="text-sm text-signal-lime">{title}</h2>
+      <article 
+        className="min-h-64 rounded-brand border border-white/10 bg-white/[0.035] p-6"
+        style={{ "--theme-color": themeColor } as React.CSSProperties}
+      >
+        <h2 className="text-sm" style={{ color: themeColor }}>{title}</h2>
         <div 
-          className="mt-5 text-xl leading-relaxed text-signal-paper/76 [&_a:hover]:underline [&_a]:text-signal-lime [&_a]:transition-colors [&_i]:text-white"
+          className="mt-5 text-xl leading-relaxed text-signal-paper/76 [&_a:hover]:underline [&_a]:transition-colors [&_a]:text-[var(--theme-color)] [&_i]:text-white"
           dangerouslySetInnerHTML={{ __html: body }}
         />
       </article>
@@ -329,11 +442,11 @@ function ExperienceItem({ item, accentText }: { item: Experience; accentText: st
         aria-expanded={isOpen}
       >
         <div className="flex items-center gap-4">
-          <h3 className={`text-2xl transition-colors duration-300 md:text-4xl ${item.isWip ? "text-signal-paper/60 group-hover:text-signal-lime" : "group-hover:text-white"}`}>
+          <h3 className={`text-2xl transition-colors duration-300 md:text-4xl ${item.isWip ? "text-signal-paper/60 hover:text-white" : "group-hover:text-white"}`}>
             {item.title}
           </h3>
           {item.isWip && (
-            <span className="hidden rounded-full border border-signal-lime/40 bg-signal-lime/10 px-2 py-1 text-[10px] font-medium tracking-widest text-signal-lime sm:inline-block">
+            <span className={`hidden rounded-full border border-white/20 bg-white/5 px-2 py-1 text-[10px] font-medium tracking-widest text-signal-paper/60 sm:inline-block`}>
               IN PROGRESS
             </span>
           )}
@@ -362,7 +475,6 @@ function ExperienceItem({ item, accentText }: { item: Experience; accentText: st
                 {item.detail}
               </p>
               
-              {/* Optional Fading Image Carousel */}
               {item.images && item.images.length > 0 && (
                 <div className="relative mt-6 aspect-[16/9] w-full max-w-2xl overflow-hidden rounded-brand border border-white/10 bg-ink-850">
                   <AnimatePresence mode="wait">
@@ -387,7 +499,6 @@ function ExperienceItem({ item, accentText }: { item: Experience; accentText: st
                 </div>
               )}
 
-              {/* Links */}
               {item.links && item.links.length > 0 && (
                 <div className="mt-6 flex flex-wrap gap-4">
                   {item.links.map((link) => (
@@ -396,7 +507,7 @@ function ExperienceItem({ item, accentText }: { item: Experience; accentText: st
                       href={link.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 rounded-brand border border-white/18 bg-white/5 px-4 py-2 text-sm text-signal-paper transition-colors duration-300 hover:border-signal-lime hover:text-signal-lime"
+                      className={`inline-flex items-center gap-2 rounded-brand border border-white/18 bg-white/5 px-4 py-2 text-sm text-signal-paper transition-colors duration-300 hover:border-white/40`}
                     >
                       {link.label}
                       <ArrowRight aria-hidden="true" size={14} className="-rotate-45" />

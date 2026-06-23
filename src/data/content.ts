@@ -4,6 +4,7 @@ export type Project = {
   corporateTitle: string;
   question: string;
   image: string;
+  video?: string;
   alt: string;
   eyebrow: string;
   summary: string;
@@ -12,7 +13,6 @@ export type Project = {
   solution: string;
   outcome: string;
   gallery: { image: string; caption: string }[];
-  tags: string[];
 };
 
 export type Obsession = {
@@ -83,18 +83,17 @@ export const projects: Project[] = [
     gallery: [
       {
         image: "/work/face-value-gal-1.png",
-        caption: "A structured sequence of rounds designed to escalate tension as evidence is recovered."
+        caption: "The procedural flow. A structured sequence of rounds designed to escalate tension as evidence is recovered."
       },
       {
         image: "/work/face-value-gal-2.png",
-        caption: "Parameters defining how information can be shared, concealed, or weaponised."
+        caption: "The rules of engagement. Parameters defining how information can be shared, concealed, or weaponized."
       },
       {
         image: "/work/face-value-gal-3.png",
-        caption: "A physical translation of the game's mechanics into an interactive board game."
+        caption: "The live exhibition. A physical translation of the game's mechanics into an interactive suspect board."
       }
-    ],
-    tags: ["Speculative Design", "Board Games", "Brand Behaviour"],
+    ]
   },
   {
     slug: "twinings-loneliness",
@@ -121,48 +120,47 @@ export const projects: Project[] = [
       },
       {
         image: "/work/twinings-gal-2.png",
-        caption: "In-game Turkish inspired tea rooms designed as low-pressure spaces for players to pause and connect over culture."
+        caption: "In-game Turkish inspired tea houses designed as low-pressure spaces for players to pause and connect over culture."
       },
       {
         image: "/work/twinings-gal-3.png",
         caption: "Personalised tea tags acting as physical prompts to carry the conversation offline."
       }
-    ],
-    tags: ["Brand Experience", "Campaign", "Human Behaviour"],
+    ]
   },
   {
     slug: "what-do-you-call",
     title: "WHAT DO YOU CALL *****?",
     corporateTitle: "Digital Language Moderation Study",
     question: "What happens when important language is forbidden?",
-    image: "/work/what-do-you-call.png",
+    image: "/work/what-do-you-call-hero.png",
+    video: "/work/what-do-you-call.mp4",
     alt: "A redacted mixed-media poster with coded symbols, medical imagery and digital screen layers.",
     eyebrow: "Censorship / Social Media Culture",
     summary:
       "A culturally driven language system for women’s health conversations that need to survive moderation filters.",
     problem:
-      "Women’s health content is routinely muted online while sexualised slang often slips through untouched.",
+      "Women’s health content is routinely censored online, while sexualised slang remains untouched.",
     insight:
-      "Algorithms are literal in odd places. They can punish the direct word and miss the metaphor, the joke or the coded phrase people already use to survive censorship.",
+      "Algorithms struggle to detect metaphor and coded language.",
     solution:
-      "A language system of coded terms, visual cues and cultural shorthand that keeps conversations alive without making them smaller.",
+      "A culturally-driven language system that uses euphemisms to bypass moderation filters and keep conversations around women’s health alive.",
     outcome:
-      "A speculative campaign that treats censorship as a creative constraint and asks who gets to name their own body.<br><br><span class='text-sm text-signal-paper/50'><i>Developed as a collaborative group project for D&AD New Blood.</i></span>",
+      "A speculative campaign that treats censorship as a creative constraint and asks who gets to name their own body.<br><br><span class='text-sm text-signal-paper/50'><i>Developed as a collaborative group project for D&AD New Blood 2026. (Spoiler: we didn't win, but we definitely should have.)</i></span>",
     gallery: [
       {
-        image: "/work/censorship-gal-1.png",
-        caption: "Redaction as both obstacle and visual language."
+        image: "/work/what-do-you-call-gal-1.png",
+        caption: "Food trucks, menus, and receipts acting as physical gateways to bypass digital censorship and link directly to educational platforms."
       },
       {
-        image: "/work/censorship-gal-2.png",
-        caption: "Coded phrases designed to move faster than filters."
+        image: "/work/what-do-you-call-gal-2.png",
+        caption: "Social activations and an mockup website designed for data collection and mapping out conversational safe havens."
       },
       {
-        image: "/work/censorship-gal-3.png",
-        caption: "A serious subject carried with cultural fluency instead of clinical distance."
+        image: "/work/what-do-you-call-gal-3.png",
+        caption: "A self-replenishing system. Every time a platform bans a word, a new slang term immediately takes its place to keep the conversation going."
       }
-    ],
-    tags: ["Speculative Design", "Women's Health", "Digital Culture"],
+    ]
   },
 ];
 
