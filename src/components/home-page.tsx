@@ -12,7 +12,7 @@ export function HomePage() {
   const { corporate, spotifyMode, setSpotifyMode, isScrolled } = useCorporateMode();
 
   const accentBg = spotifyMode ? "bg-[#1DB954]" : "bg-signal-lime";
-  const accentBorder = spotifyMode ? "border-[#1DB954]" : "border-signal-lime";
+  const hoverBorderText = spotifyMode ? "hover:border-[#1DB954] hover:text-[#1DB954]" : "hover:border-signal-lime hover:text-signal-lime";
 
   if (corporate) {
     return <CorporateHome />;
@@ -88,10 +88,10 @@ export function HomePage() {
           <p className="mb-8 text-2xl text-signal-paper/60 md:text-3xl">Enough about my obsessions.</p>
           <Link
             href="/work"
-            className={`inline-flex w-fit items-center gap-3 rounded-brand border ${accentBorder} ${accentBg} px-6 py-5 text-xl text-ink-950 transition-colors duration-500 hover:bg-signal-paper hover:border-signal-paper`}
+            className={`group inline-flex items-center gap-4 rounded-full border border-white/14 bg-white/5 px-8 py-4 text-lg text-signal-paper transition-all ${hoverBorderText}`}
           >
             I'm sure you'd like to see my actual work now.
-            <ArrowRight aria-hidden="true" size={24} />
+            <ArrowRight size={20} className="transition-transform duration-300 group-hover:translate-x-1" />
           </Link>
         </Reveal>
       </section>

@@ -13,61 +13,16 @@ const nav = [
   { href: "/contact", label: "Contact" },
 ];
 
-// Helper to determine the global theme based on the current route
-const getGlobalTheme = (pathname: string, spotifyMode: boolean) => {
-  if (spotifyMode) {
-    return {
-      bg: "bg-[#1DB954]",
-      text: "text-[#1DB954]",
-      border: "border-[#1DB954]",
-      hoverBorder: "hover:border-[#1DB954]",
-      hoverText: "hover:text-[#1DB954]",
-      focusText: "focus:text-[#1DB954]",
-    };
-  }
-
-  if (pathname.includes("/work/face-value")) {
-    return {
-      bg: "bg-[#9E4242]",
-      text: "text-[#9E4242]",
-      border: "border-[#9E4242]",
-      hoverBorder: "hover:border-[#9E4242]",
-      hoverText: "hover:text-[#9E4242]",
-      focusText: "focus:text-[#9E4242]",
-    };
-  }
-
-  if (pathname.includes("/work/twinings-loneliness")) {
-    return {
-      bg: "bg-[#ffa81f]",
-      text: "text-[#ffa81f]",
-      border: "border-[#ffa81f]",
-      hoverBorder: "hover:border-[#ffa81f]",
-      hoverText: "hover:text-[#ffa81f]",
-      focusText: "focus:text-[#ffa81f]",
-    };
-  }
-
-  if (pathname.includes("/work/what-do-you-call")) {
-    return {
-      bg: "bg-[#db5e8d]",
-      text: "text-[#db5e8d]",
-      border: "border-[#db5e8d]",
-      hoverBorder: "hover:border-[#db5e8d]",
-      hoverText: "hover:text-[#db5e8d]",
-      focusText: "focus:text-[#db5e8d]",
-    };
-  }
-
-  // Default Theme (signal-lime)
-  return {
-    bg: "bg-signal-lime",
-    text: "text-signal-lime",
-    border: "border-signal-lime",
-    hoverBorder: "hover:border-signal-lime",
-    hoverText: "hover:text-signal-lime",
-    focusText: "focus:text-signal-lime",
-  };
+// Helper to return the exact hex code based on the URL
+const getThemeColor = (pathname: string, spotifyMode: boolean) => {
+  // Constrain Spotify Mode to ONLY the Home Page
+  if (spotifyMode && pathname === "/") return "#1DB954";
+  
+  if (pathname.includes("/work/face-value")) return "#9E4242";
+  if (pathname.includes("/work/twinings-loneliness")) return "#ffa81f";
+  if (pathname.includes("/work/what-do-you-call")) return "#db5e8d";
+  
+  return "#d7ff3f"; // Default signal-lime
 };
 
 export function SiteChrome({ children }: { children: ReactNode }) {
@@ -84,11 +39,13 @@ export function SiteChrome({ children }: { children: ReactNode }) {
     }
   });
 
-  // Calculate active theme variables based on URL
-  const theme = getGlobalTheme(pathname, spotifyMode);
+  // Calculate active hex color
+  const themeHex = getThemeColor(pathname, spotifyMode);
 
   return (
     <div
+      // Inject the hex code globally as a CSS variable
+      style={{ "--theme-color": themeHex } as React.CSSProperties}
       className={
         corporate
           ? "min-h-screen bg-white font-corporate text-black"
@@ -98,7 +55,7 @@ export function SiteChrome({ children }: { children: ReactNode }) {
       {!corporate ? (
         <>
           <motion.div
-            className={`fixed left-0 right-0 top-0 z-[70] h-1 origin-left transition-colors duration-500 ${theme.bg}`}
+            className="fixed left-0 right-0 top-0 z-[70] h-1 origin-left transition-colors duration-500 bg-[var(--theme-color)]"
             style={{ scaleX }}
             aria-hidden="true"
           />
@@ -165,9 +122,9 @@ export function SiteChrome({ children }: { children: ReactNode }) {
                             ? `px-3 py-2 text-sm underline-offset-4 hover:underline ${
                                 active ? "font-bold text-signal-blue" : "text-black"
                               }`
-                            : `block rounded-brand border px-3 py-2 text-sm backdrop-blur-md transition-colors duration-300 ${theme.hoverBorder} ${theme.hoverText} ${
+                            : `block rounded-brand border px-3 py-2 text-sm backdrop-blur-md transition-colors duration-300 hover:border-[var(--theme-color)] hover:text-[var(--theme-color)] ${
                                 active
-                                  ? `${theme.border} ${theme.bg} text-ink-950`
+                                  ? "border-[var(--theme-color)] bg-[var(--theme-color)] text-ink-950"
                                   : "border-white/12 bg-black/30 text-signal-paper/72"
                               }`
                         }
@@ -192,7 +149,7 @@ export function SiteChrome({ children }: { children: ReactNode }) {
         className={
           corporate
             ? "fixed bottom-4 left-4 z-[80] inline-flex items-center gap-2 border border-signal-blue bg-signal-blue px-4 py-3 font-corporate text-base text-white"
-            : `fixed bottom-4 left-4 z-[80] inline-flex max-w-[13rem] items-center gap-2 rounded-brand border border-white/12 bg-black/45 px-3 py-2 text-left text-xs text-signal-paper/45 backdrop-blur-md transition-colors duration-300 ${theme.hoverBorder} ${theme.hoverText} ${theme.focusText}`
+            : `fixed bottom-4 left-4 z-[80] inline-flex max-w-[13rem] items-center gap-2 rounded-brand border border-white/12 bg-black/45 px-3 py-2 text-left text-xs text-signal-paper/45 backdrop-blur-md transition-colors duration-300 hover:border-[var(--theme-color)] hover:text-[var(--theme-color)] focus:text-[var(--theme-color)]`
         }
       >
         {corporate ? <RotateCcw aria-hidden="true" size={16} /> : <ArrowUpRight aria-hidden="true" size={14} />}

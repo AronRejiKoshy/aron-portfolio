@@ -13,18 +13,8 @@ type ProjectPageProps = {
   project?: Project; // This is now optional
 };
 
-// Custom theme logic for specific projects
-const getTheme = (slug?: string, spotifyMode?: boolean) => {
-  if (spotifyMode) {
-    return {
-      color: "#1DB954",
-      text: "text-[#1DB954]",
-      hoverText: "hover:text-[#1DB954]",
-      groupHoverText: "group-hover:text-[#1DB954]",
-      groupHoverBg: "group-hover:bg-[#1DB954]",
-    };
-  }
-
+// Custom theme logic for specific projects (Spotify mode removed to prevent bleeding)
+const getTheme = (slug?: string) => {
   switch (slug) {
     case "face-value":
       return {
@@ -62,7 +52,7 @@ const getTheme = (slug?: string, spotifyMode?: boolean) => {
 };
 
 export function ProjectPage({ project }: ProjectPageProps) {
-  const { corporate, spotifyMode } = useCorporateMode();
+  const { corporate } = useCorporateMode();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   
   // Video Player State
@@ -88,8 +78,8 @@ export function ProjectPage({ project }: ProjectPageProps) {
     }
   };
 
-  // Determine active theme based on current project (if rendering case study)
-  const activeTheme = getTheme(project?.slug, spotifyMode);
+  // Determine active theme based on current project
+  const activeTheme = getTheme(project?.slug);
 
   // ==========================================
   // VIEW 1: WORK OVERVIEW (If no project is passed)
@@ -132,13 +122,13 @@ export function ProjectPage({ project }: ProjectPageProps) {
                 </h1>
               </div>
               <p className="max-w-md text-lg leading-relaxed text-signal-paper/62">
-                I approach every project as a question first, because the question is usually where the interesting bit lives. The work below is just how I chose to answer them.
+                I approach every project as a question first. The work below is just how I chose to answer them.
               </p>
             </Reveal>
 
             <div className="mt-14 space-y-16 md:mt-24 md:space-y-24">
               {projects.map((proj, index) => {
-                const projTheme = getTheme(proj.slug, spotifyMode);
+                const projTheme = getTheme(proj.slug);
                 return (
                   <Reveal key={proj.slug} delay={index * 0.08}>
                     <Link
@@ -163,7 +153,6 @@ export function ProjectPage({ project }: ProjectPageProps) {
                             className="object-cover transition duration-700 group-hover:scale-[1.035]"
                             priority={index === 0}
                           />
-                          {/* Stripped the blur and title - leaving just the slick hover arrow */}
                           <div className="absolute inset-x-0 bottom-0 flex justify-end p-5 md:p-7">
                             <span className={`grid h-11 w-11 shrink-0 place-items-center rounded-brand border border-white/18 transition-all duration-500 text-signal-lime ${projTheme.groupHoverBg} group-hover:text-ink-950 group-hover:border-transparent`}>
                               <ArrowRight aria-hidden="true" size={20} />
@@ -179,7 +168,8 @@ export function ProjectPage({ project }: ProjectPageProps) {
           </div>
         </section>
 
-        <section className="border-t border-white/10 px-4 py-24 md:px-8 md:py-32">
+        {/* Added id="other-places" so the What Do You Call button scrolls directly here */}
+        <section id="other-places" className="border-t border-white/10 px-4 py-24 md:px-8 md:py-32">
           <div className="mx-auto max-w-[1500px]">
             <Reveal>
               <h2 className="max-w-4xl text-5xl leading-none md:text-7xl">Other places the questions went.</h2>
@@ -193,7 +183,6 @@ export function ProjectPage({ project }: ProjectPageProps) {
               ))}
             </div>
 
-            {/* About Page Teaser */}
             <Reveal className="mt-28 flex justify-center">
               <Link
                 href="/about"
@@ -213,11 +202,11 @@ export function ProjectPage({ project }: ProjectPageProps) {
   // VIEW 2: INDIVIDUAL CASE STUDY (If project IS passed)
   // ==========================================
   const index = projects.findIndex((item) => item.slug === project.slug);
-  const nextProject = projects[(index + 1) % projects.length];
-  const nextTheme = getTheme(nextProject.slug, spotifyMode);
 
   if (corporate) {
-    return <CorporateProject project={project} nextProject={nextProject} />;
+    // Basic corporate fallback navigation
+    const nextProjectCorp = projects[(index + 1) % projects.length];
+    return <CorporateProject project={project} nextProject={nextProjectCorp} />;
   }
 
   return (
@@ -255,7 +244,6 @@ export function ProjectPage({ project }: ProjectPageProps) {
                     onClick={togglePlay}
                     onEnded={() => setIsPlaying(false)}
                   />
-                  {/* Custom Controls UI */}
                   <div className="absolute bottom-6 left-0 right-0 flex justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                     <div className="flex items-center gap-4 rounded-full border border-white/10 bg-black/60 px-6 py-3 backdrop-blur-md">
                       <button 
@@ -345,19 +333,63 @@ export function ProjectPage({ project }: ProjectPageProps) {
       </section>
 
       <section className="border-t border-white/10 px-4 py-16 md:px-8">
-        <div className="mx-auto flex max-w-[1500px] justify-end">
-          <Link
-            href={`/work/${nextProject.slug}`}
-            className="group inline-flex max-w-3xl items-center gap-5 text-right transition"
-          >
-            <div className="flex flex-col items-end">
-              <span className="mb-2 text-sm text-signal-paper/58">Next question</span>
-              <span className={`text-2xl leading-tight text-signal-paper transition-colors ${nextTheme.groupHoverText} md:text-4xl`}>
-                {nextProject.question}
-              </span>
+        <div className="mx-auto flex max-w-[1500px] flex-col gap-10 sm:flex-row sm:items-center sm:justify-between">
+          
+          {/* LEFT SIDE: PREVIOUS NAVIGATION */}
+          {index === 0 ? (
+            <div className="group inline-flex max-w-xl items-center gap-5 text-left opacity-40 cursor-not-allowed">
+              <ArrowLeft aria-hidden="true" size={32} className="shrink-0 text-signal-paper/58" />
+              <div className="flex flex-col items-start">
+                <span className="mb-2 text-sm text-signal-paper/58">Previous question</span>
+                <span className="text-2xl leading-tight text-signal-paper md:text-4xl">
+                  Why are you trying to go back? This is the first project.
+                </span>
+              </div>
             </div>
-            <ArrowRight aria-hidden="true" size={32} className={`shrink-0 text-signal-paper/58 transition-colors ${nextTheme.groupHoverText}`} />
-          </Link>
+          ) : (
+            <Link
+              href={`/work/${projects[index - 1].slug}`}
+              className="group inline-flex max-w-xl items-center gap-5 text-left transition"
+            >
+              <ArrowLeft aria-hidden="true" size={32} className={`shrink-0 text-signal-paper/58 transition-colors ${getTheme(projects[index - 1].slug).groupHoverText}`} />
+              <div className="flex flex-col items-start">
+                <span className="mb-2 text-sm text-signal-paper/58">Previous question</span>
+                <span className={`text-2xl leading-tight text-signal-paper transition-colors ${getTheme(projects[index - 1].slug).groupHoverText} md:text-4xl`}>
+                  {projects[index - 1].question}
+                </span>
+              </div>
+            </Link>
+          )}
+
+          {/* RIGHT SIDE: NEXT NAVIGATION OR OTHER WORK */}
+          {index === projects.length - 1 ? (
+            <Link
+              href="/work#other-places"
+              className="group inline-flex max-w-xl items-center gap-5 text-right transition sm:ml-auto"
+            >
+              <div className="flex flex-col items-end">
+                <span className="mb-2 text-sm text-signal-paper/58">Still curious?</span>
+                <span className="text-2xl leading-tight text-signal-paper transition-colors group-hover:text-signal-lime md:text-4xl">
+                  Not satisfied with my work? Check out some other things I've been working on.
+                </span>
+              </div>
+              <ArrowRight aria-hidden="true" size={32} className="shrink-0 text-signal-paper/58 transition-colors group-hover:text-signal-lime" />
+            </Link>
+          ) : (
+            <Link
+              href={`/work/${projects[index + 1].slug}`}
+              className="group inline-flex max-w-xl items-center gap-5 text-right transition sm:ml-auto"
+            >
+              <div className="flex flex-col items-end">
+                <span className="mb-2 text-sm text-signal-paper/58">Next question</span>
+                <span className={`text-2xl leading-tight text-signal-paper transition-colors ${getTheme(projects[index + 1].slug).groupHoverText} md:text-4xl`}>
+                  {projects[index + 1].question}
+                </span>
+              </div>
+              <ArrowRight aria-hidden="true" size={32} className={`shrink-0 text-signal-paper/58 transition-colors ${getTheme(projects[index + 1].slug).groupHoverText}`} />
+            </Link>
+          )}
+
         </div>
       </section>
 
@@ -402,7 +434,6 @@ export function ProjectPage({ project }: ProjectPageProps) {
   );
 }
 
-// Passed dynamic themeColor to drive inline CSS variables for the links
 function ProjectBlock({ title, body, themeColor }: { title: string; body: string; themeColor: string }) {
   return (
     <Reveal>
@@ -446,7 +477,7 @@ function ExperienceItem({ item, accentText }: { item: Experience; accentText: st
             {item.title}
           </h3>
           {item.isWip && (
-            <span className={`hidden rounded-full border border-white/20 bg-white/5 px-2 py-1 text-[10px] font-medium tracking-widest text-signal-paper/60 sm:inline-block`}>
+            <span className="hidden rounded-full border border-signal-lime bg-signal-lime/10 px-2 py-1 text-[10px] font-medium tracking-widest text-signal-lime sm:inline-block">
               IN PROGRESS
             </span>
           )}
