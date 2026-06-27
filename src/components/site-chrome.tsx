@@ -13,16 +13,13 @@ const nav = [
   { href: "/contact", label: "Contact" },
 ];
 
-// Helper to return the exact hex code based on the URL
 const getThemeColor = (pathname: string, spotifyMode: boolean) => {
-  // Constrain Spotify Mode to ONLY the Home Page
   if (spotifyMode && pathname === "/") return "#1DB954";
-  
   if (pathname.includes("/work/face-value")) return "#9E4242";
   if (pathname.includes("/work/twinings-loneliness")) return "#ffa81f";
   if (pathname.includes("/work/what-do-you-call")) return "#db5e8d";
   
-  return "#d7ff3f"; // Default signal-lime
+  return "#FF5A00"; 
 };
 
 export function SiteChrome({ children }: { children: ReactNode }) {
@@ -30,6 +27,8 @@ export function SiteChrome({ children }: { children: ReactNode }) {
   const { corporate, toggleCorporate, setCorporate, spotifyMode, isScrolled, setIsScrolled } = useCorporateMode();
   const { scrollYProgress, scrollY } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 110, damping: 28, mass: 0.18 });
+
+  const isHomePage = pathname === "/";
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     if (latest > 300 && !isScrolled) {
@@ -39,12 +38,10 @@ export function SiteChrome({ children }: { children: ReactNode }) {
     }
   });
 
-  // Calculate active hex color
   const themeHex = getThemeColor(pathname, spotifyMode);
 
   return (
     <div
-      // Inject the hex code globally as a CSS variable
       style={{ "--theme-color": themeHex } as React.CSSProperties}
       className={
         corporate
@@ -70,7 +67,7 @@ export function SiteChrome({ children }: { children: ReactNode }) {
             : "fixed left-0 right-0 top-0 z-50 px-4 py-4 md:px-8 md:py-6"
         }
       >
-        <div className="mx-auto flex max-w-[1500px] items-center justify-between gap-4">
+        <div className="w-full flex items-center justify-between gap-4">
           <Link
             href="/"
             className="relative flex h-8 items-center"
@@ -78,7 +75,7 @@ export function SiteChrome({ children }: { children: ReactNode }) {
           >
             {corporate ? (
               <span className="font-corporate text-xl text-black">Aron Reji CV Website</span>
-            ) : (
+            ) : isHomePage ? (
               <>
                 <span className="font-display text-xl leading-none opacity-0 md:text-2xl">
                   ARON
@@ -93,6 +90,10 @@ export function SiteChrome({ children }: { children: ReactNode }) {
                   </motion.span>
                 )}
               </>
+            ) : (
+              <span className="font-display text-xl leading-none text-signal-paper md:text-2xl">
+                ARON
+              </span>
             )}
           </Link>
 
@@ -148,12 +149,12 @@ export function SiteChrome({ children }: { children: ReactNode }) {
         aria-pressed={corporate}
         className={
           corporate
-            ? "fixed bottom-4 left-4 z-[80] inline-flex items-center gap-2 border border-signal-blue bg-signal-blue px-4 py-3 font-corporate text-base text-white"
-            : `fixed bottom-4 left-4 z-[80] inline-flex max-w-[13rem] items-center gap-2 rounded-brand border border-white/12 bg-black/45 px-3 py-2 text-left text-xs text-signal-paper/45 backdrop-blur-md transition-colors duration-300 hover:border-[var(--theme-color)] hover:text-[var(--theme-color)] focus:text-[var(--theme-color)]`
+            ? "fixed bottom-4 right-4 z-[80] inline-flex items-center gap-2 border border-signal-blue bg-signal-blue px-4 py-3 font-corporate text-base text-white shadow-lg"
+            : `fixed bottom-4 right-4 z-[80] inline-flex max-w-[15rem] items-center gap-2 rounded-brand border border-white/12 bg-black/45 px-3 py-2 text-left text-xs text-signal-paper/45 backdrop-blur-md transition-colors duration-300 hover:border-[var(--theme-color)] hover:text-[var(--theme-color)] focus:text-[var(--theme-color)]`
         }
       >
         {corporate ? <RotateCcw aria-hidden="true" size={16} /> : <ArrowUpRight aria-hidden="true" size={14} />}
-        {corporate ? "Bring Aron back." : "Need the LinkedIn version?"}
+        {corporate ? "Why would you ever click this version?" : "Need the LinkedIn version?"}
       </button>
 
       {corporate ? (

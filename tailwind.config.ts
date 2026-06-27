@@ -14,7 +14,8 @@ const config: Config = {
         },
         signal: {
           red: "#ff3b30",
-          lime: "#d7ff3f",
+          orange: "#FF5A00", // Your killer new primary color
+          lime: "#FF5A00", // Aliased to orange so your other components don't break!
           cyan: "#68e8ff",
           amber: "#f4ad45",
           paper: "#f5efe2",

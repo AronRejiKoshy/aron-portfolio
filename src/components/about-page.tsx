@@ -16,7 +16,7 @@ export function AboutPage() {
         <section className="mx-auto max-w-5xl">
           <h1 className="text-5xl leading-tight">Professional Profile</h1>
           <p className="mt-6 max-w-3xl text-xl leading-relaxed">
-            Aron is a First Class Media and Communications graduate with a proven track record in collaborative leadership, strategic ideation, and creative problem-solving.
+            Aron is a First Class Media and Communications graduate with a proven track record in collaborative leadership, strategic ideation, and creative problem-solving. Please view the homepage for my full CV.
           </p>
         </section>
       </main>
@@ -27,7 +27,7 @@ export function AboutPage() {
     <main className="bg-ink-950 px-4 pb-24 pt-28 text-signal-paper md:px-8 md:pt-36 min-h-screen overflow-hidden">
       <section className="mx-auto max-w-[1500px]">
         <Reveal>
-          <p className="text-sm text-signal-lime">Honestly,</p>
+          <p className="text-sm text-signal-orange">Honestly,</p>
           <h1 className="mt-5 max-w-6xl text-5xl leading-[1.02] text-balance md:text-7xl lg:text-8xl">
             I'm just a guy who gets obsessed with things.
           </h1>
@@ -49,7 +49,7 @@ export function AboutPage() {
             <Reveal delay={0.08}>
               <div className="space-y-6 text-xl leading-relaxed text-signal-paper/68">
                 <p>
-                  Most of my projects start the same way: I notice something interesting and refuse to leave it alone. I stay curious long enough and something interesting usually happens. Like how people say "Comparison is the thief of joy", I'd like to trademark "<span className="text-signal-lime">Curiosity is the giver of joy</span>". I've also been told I don't have a life. They're probably right.
+                  Most of my projects start the same way: I notice something interesting and refuse to leave it alone. I stay curious long enough and something interesting usually happens. Like how people say "Comparison is the thief of joy", I'd like to trademark "<span className="text-signal-orange">Curiosity is the giver of joy</span>". I've  been told I don't have a life. They're probably right.
                 </p>
                 <p>
                   I usually come across as shy and timid in the beginning, but give me a few business days and a pint and Aron will be up and running.
@@ -67,8 +67,8 @@ export function AboutPage() {
                 <p className="mt-3 max-w-2xl text-2xl leading-tight md:text-4xl">
                   I also graduated with First Class Honours in Media &amp; Communications from the University of Greenwich.
                 </p>
-                <p className="mt-5 text-lg text-signal-lime">
-                  They said any agency "would be incredibly lucky to have him on the team". (Their words, not mine. But I agree.)
+                <p className="mt-5 text-lg text-signal-orange">
+                  They said any agency "would be incredibly lucky to have him on the team". (Their words, not mine.)
                 </p>
               </div>
             </Reveal>
@@ -99,7 +99,7 @@ export function AboutPage() {
         <Reveal>
           <Link
             href="/contact"
-            className="group inline-flex items-center gap-4 rounded-full border border-white/14 bg-white/5 px-8 py-4 text-lg text-signal-paper transition-all hover:border-signal-lime hover:text-signal-lime"
+            className="group inline-flex items-center gap-4 rounded-full border border-white/14 bg-white/5 px-8 py-4 text-lg text-signal-paper transition-all hover:border-signal-orange hover:text-signal-orange"
           >
             <span>Enough about Me, let's hear from You.</span>
             <ArrowRight size={20} className="transition-transform duration-300 group-hover:translate-x-1" />
@@ -113,17 +113,17 @@ export function AboutPage() {
 // --- INTERACTIVE COMPONENTS ---
 
 const ARON_PRESETS = [
-  { Strategy: 9, Absurdity: 3, Direction: 3, Pints: 1 }, // The Strategist
-  { Strategy: 1, Absurdity: 10, Direction: 2, Pints: 3 }, // The Menace
-  { Strategy: 3, Absurdity: 2, Direction: 10, Pints: 1 }, // The Perfectionist
-  { Strategy: 2, Absurdity: 3, Direction: 1, Pints: 10 }, // The Networker
-  { Strategy: 8, Absurdity: 8, Direction: 0, Pints: 0 }, // The Creative Menace
-  { Strategy: 4, Absurdity: 4, Direction: 4, Pints: 4 }, // The Fully Upgraded Aron
+  { Strategy: 9, Absurdity: 3, Direction: 3, Pints: 1 }, 
+  { Strategy: 1, Absurdity: 10, Direction: 2, Pints: 3 }, 
+  { Strategy: 3, Absurdity: 2, Direction: 10, Pints: 1 }, 
+  { Strategy: 2, Absurdity: 3, Direction: 1, Pints: 10 }, 
+  { Strategy: 8, Absurdity: 8, Direction: 0, Pints: 0 }, 
+  { Strategy: 4, Absurdity: 4, Direction: 4, Pints: 4 }, 
 ];
 
 function AronLoadout() {
   const MAX_POINTS = 16;
-  const [pointsLeft, setPointsLeft] = useState(11); // Starts with 5 points allocated
+  const [pointsLeft, setPointsLeft] = useState(11); 
   const [presetIndex, setPresetIndex] = useState(0);
   const [stats, setStats] = useState({
     Strategy: 2,
@@ -145,11 +145,8 @@ function AronLoadout() {
   const handlePickAron = () => {
     const preset = ARON_PRESETS[presetIndex];
     setStats(preset);
-    
-    // Calculate remaining points to ensure UI accuracy
     const totalAllocated = Object.values(preset).reduce((acc, val) => acc + val, 0);
     setPointsLeft(MAX_POINTS - totalAllocated);
-    
     setPresetIndex((prev) => (prev + 1) % ARON_PRESETS.length);
   };
 
@@ -158,7 +155,6 @@ function AronLoadout() {
     setPointsLeft(MAX_POINTS);
   };
 
-  // Archetype Logic
   let archetype = "The Generalist";
   let description = "A perfectly balanced build. Capable of doing a bit of everything without breaking a sweat.";
   let rating = "B";
@@ -203,7 +199,7 @@ function AronLoadout() {
             <h3 className="text-2xl md:text-3xl">Build An Aron</h3>
             <p className="mt-1 text-sm text-signal-paper/40">Allocate {MAX_POINTS} points wisely.</p>
           </div>
-          <span className="font-mono text-signal-lime">PTS: {pointsLeft}</span>
+          <span className="font-mono text-signal-orange">PTS: {pointsLeft}</span>
         </div>
 
         <div className="space-y-6">
@@ -213,7 +209,7 @@ function AronLoadout() {
               <div className="flex flex-1 items-center gap-3 px-4">
                 <div className="flex h-2 flex-1 overflow-hidden rounded-full bg-white/5">
                   <motion.div 
-                    className="bg-signal-lime" 
+                    className="bg-signal-orange" 
                     initial={{ width: 0 }}
                     animate={{ width: `${(value / 10) * 100}%` }}
                     transition={{ type: "spring", stiffness: 300, damping: 25 }}
@@ -244,7 +240,7 @@ function AronLoadout() {
         <div className="mt-8 flex gap-3">
           <button
             onClick={handlePickAron}
-            className="flex-1 rounded-full border border-white/20 bg-white/5 py-3 text-sm text-signal-paper transition hover:bg-white/10 hover:border-signal-lime/50 hover:text-signal-lime"
+            className="flex-1 rounded-full border border-white/20 bg-white/5 py-3 text-sm text-signal-paper transition hover:bg-white/10 hover:border-signal-orange/50 hover:text-signal-orange"
           >
             Randomise Aron
           </button>
@@ -260,7 +256,7 @@ function AronLoadout() {
 
       <div className="mt-10 rounded-lg bg-black/40 p-5 border border-white/5 flex flex-col justify-center min-h-[140px]">
         <div className="flex items-start justify-between mb-3">
-          <span className="text-xl md:text-2xl font-display text-signal-lime">{archetype}</span>
+          <span className="text-xl md:text-2xl font-display text-signal-orange">{archetype}</span>
           <span className="text-xl md:text-2xl font-display text-white/50">{rating}</span>
         </div>
         <p className="text-signal-paper/60 italic leading-relaxed text-sm md:text-base">
@@ -320,7 +316,7 @@ function BriefGenerator() {
                   animate={{ y: 0, opacity: 1 }}
                   exit={{ y: -40, opacity: 0 }}
                   transition={{ duration: 0.2 }}
-                  className="absolute inset-0 font-display text-3xl md:text-4xl text-signal-lime whitespace-nowrap"
+                  className="absolute inset-0 font-display text-3xl md:text-4xl text-signal-orange whitespace-nowrap"
                 >
                   {result.brand}
                 </motion.div>
@@ -338,7 +334,7 @@ function BriefGenerator() {
                   animate={{ y: 0, opacity: 1 }}
                   exit={{ y: -40, opacity: 0 }}
                   transition={{ duration: 0.2 }}
-                  className="absolute inset-0 font-display text-3xl md:text-4xl text-signal-lime whitespace-nowrap"
+                  className="absolute inset-0 font-display text-3xl md:text-4xl text-signal-orange whitespace-nowrap"
                 >
                   {result.audience}
                 </motion.div>
@@ -356,7 +352,7 @@ function BriefGenerator() {
                   animate={{ y: 0, opacity: 1 }}
                   exit={{ y: -40, opacity: 0 }}
                   transition={{ duration: 0.2 }}
-                  className="absolute inset-0 font-display text-3xl md:text-4xl text-signal-lime whitespace-nowrap"
+                  className="absolute inset-0 font-display text-3xl md:text-4xl text-signal-orange whitespace-nowrap"
                 >
                   {result.medium}
                 </motion.div>
@@ -370,7 +366,7 @@ function BriefGenerator() {
         <button 
           onClick={spin}
           disabled={isSpinning}
-          className="shrink-0 rounded-full border border-signal-lime bg-signal-lime/10 px-6 py-3 text-signal-lime transition hover:bg-signal-lime hover:text-ink-950 disabled:opacity-50 disabled:hover:bg-signal-lime/10 disabled:hover:text-signal-lime"
+          className="shrink-0 rounded-full border border-signal-orange bg-signal-orange/10 px-6 py-3 text-signal-orange transition hover:bg-signal-orange hover:text-ink-950 disabled:opacity-50 disabled:hover:bg-signal-orange/10 disabled:hover:text-signal-orange"
         >
           {isSpinning ? "Generating..." : "Generate Brief"}
         </button>
