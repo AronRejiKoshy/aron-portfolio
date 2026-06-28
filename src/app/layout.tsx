@@ -7,9 +7,12 @@ import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata: Metadata = {
-  title: "Aron | Questions Until Something Interesting Happens",
+  title: "Aron Reji | Professionally Distracted",
   description:
-    "A personal website for Aron, a creative strategist and experience designer working across brand experience, speculative design and campaign thinking.",
+    "The digital playground of Aron Reji. I bridge the gap between strategy and art direction by building campaigns people actually want to look at.",
+  icons: {
+    icon: "/favicon.png",
+  },
 };
 
 export const viewport: Viewport = {

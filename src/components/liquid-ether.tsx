@@ -115,7 +115,6 @@ export default function LiquidEther({
     }
 
     const paletteTex = makePaletteTexture(colors);
-    // Hard-code transparent background vector (alpha 0)
     const bgVec4 = new THREE.Vector4(0, 0, 0, 0);
 
     class CommonClass {
@@ -131,13 +130,13 @@ export default function LiquidEther({
       delta = 0;
       container: HTMLElement | null = null;
       renderer: THREE.WebGLRenderer | null = null;
-      clock: THREE.Clock | null = null;
+      lastTime = 0; // REPLACED CLOCK WITH MANUAL TIMER
+
       init(container: HTMLElement) {
         this.container = container;
         this.pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
         this.resize();
         this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-        // Always transparent
         this.renderer.autoClear = false;
         this.renderer.setClearColor(new THREE.Color(0x000000), 0);
         this.renderer.setPixelRatio(this.pixelRatio);
@@ -146,8 +145,7 @@ export default function LiquidEther({
         el.style.width = '100%';
         el.style.height = '100%';
         el.style.display = 'block';
-        this.clock = new THREE.Clock();
-        this.clock.start();
+        this.lastTime = performance.now(); // SET START TIME
       }
       resize() {
         if (!this.container) return;
@@ -158,8 +156,9 @@ export default function LiquidEther({
         if (this.renderer) this.renderer.setSize(this.width, this.height, false);
       }
       update() {
-        if (!this.clock) return;
-        this.delta = this.clock.getDelta();
+        const now = performance.now(); // CALCULATE DELTA WITHOUT THREE.CLOCK
+        this.delta = (now - this.lastTime) / 1000;
+        this.lastTime = now;
         this.time += this.delta;
       }
     }
@@ -1184,7 +1183,7 @@ export default function LiquidEther({
     mouseForce,
     resolution,
     viscous,
-    colors,
+    colors, // If you ever inline colors again, this causes the flash!
     autoDemo,
     autoSpeed,
     autoIntensity,

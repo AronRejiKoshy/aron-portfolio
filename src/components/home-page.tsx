@@ -12,6 +12,9 @@ import { obsessions } from "@/data/content";
 // Dynamically import the LiquidEther component
 const LiquidEther = dynamic(() => import("@/components/liquid-ether"), { ssr: false });
 
+// Extract the array OUTSIDE the component so React doesn't destroy the canvas on scroll
+const LIQUID_COLORS = ['#ffffff', '#444444', '#050505'];
+
 export function HomePage() {
   const { corporate, spotifyMode, setSpotifyMode, isScrolled } = useCorporateMode();
 
@@ -25,21 +28,21 @@ export function HomePage() {
   return (
     <main className="relative bg-ink-950 text-signal-paper min-h-screen">
       
-      {/* BACKGROUND SIMULATION - Now Brighter & White/Silver */}
-      <div className="absolute inset-0 z-0 opacity-80 mix-blend-screen">
+      {/* BACKGROUND SIMULATION - Optimized for Performance */}
+      <div className="fixed top-0 left-0 w-screen h-screen z-0 opacity-80 mix-blend-screen pointer-events-none">
         <LiquidEther
-          colors={['#ffffff', '#444444', '#050505']}
-          mouseForce={40}
-          cursorSize={200}
-          isViscous={true}
-          viscous={25}
-          iterationsViscous={32}
-          iterationsPoisson={32}
-          resolution={0.5}
+          colors={LIQUID_COLORS}
+          mouseForce={25}
+          cursorSize={120}
+          isViscous={false} // Turned off extra physics pass to save massive performance
+          viscous={10}
+          iterationsViscous={16} // Halved for speed
+          iterationsPoisson={16} // Halved for speed
+          resolution={0.25} // Dropped from 0.5 to vastly improve framerate
           isBounce={false}
           autoDemo={true}
-          autoSpeed={0.5}
-          autoIntensity={3.0}
+          autoSpeed={0.3}
+          autoIntensity={1.5}
           takeoverDuration={0.25}
           autoResumeDelay={3000}
           autoRampDuration={0.6}
@@ -47,7 +50,7 @@ export function HomePage() {
       </div>
 
       {/* CONTENT LAYER */}
-      <div className="relative z-10 w-full">
+      <div className="relative z-10 w-full" style={{ willChange: 'transform' }}>
         <section className="flex min-h-[90vh] flex-col justify-center px-4 pt-32 pb-8 md:px-8 md:pt-40">
           <div className="mx-auto w-full max-w-[1500px]">
             
@@ -73,7 +76,7 @@ export function HomePage() {
               </p>
               <p className="mt-6 max-w-2xl text-xl leading-relaxed text-signal-paper/72 md:text-2xl drop-shadow-md">
                 <span className="block">Sometimes it becomes a campaign.</span>
-                <span className="block">Sometimes it becomes a website or a board game.</span>
+                <span className="block">Sometimes it becomes a website.</span>
                 <span className="block">Most of the times it becomes a problem for everyone involved.</span>
               </p>
             </motion.div>

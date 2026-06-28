@@ -89,15 +89,15 @@ export const projects: Project[] = [
     gallery: [
       {
         image: "/work/face-value-gal-1.png",
-        caption: "The procedural flow. A structured sequence of rounds designed to escalate tension as evidence is recovered."
+        caption: "A structured sequence of rounds designed to escalate tension as evidence is recovered."
       },
       {
         image: "/work/face-value-gal-2.png",
-        caption: "The rules of engagement. Parameters defining how information can be shared, concealed, or weaponized."
+        caption: "Rules defining how information can be shared, concealed, or weaponised."
       },
       {
         image: "/work/face-value-gal-3.png",
-        caption: "The live exhibition. A physical translation of the game's mechanics into an interactive suspect board."
+        caption: "A physical translation of the game's mechanics into an interactive suspect board."
       }
     ],
     corporateSummary: "A research-led brand strategy initiative exploring how consumer perception and unconscious bias impact brand equity.",
@@ -224,14 +224,6 @@ export const experience: Experience[] = [
     links: [],
     isWip: true
   },
-];
-
-export const lessons = [
-  "The best ideas usually sound ridiculous at first.",
-  "Research is only useful if it changes something.",
-  "Board games are one of the best ways to understand people.",
-  "A good question can do more work than a polished answer.",
-  "Most brands are more interesting when they stop talking about themselves.",
 ];
 
 export const unfinishedNotes = [
