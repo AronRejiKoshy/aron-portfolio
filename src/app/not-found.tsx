@@ -6,7 +6,7 @@ import { ArrowLeft } from "lucide-react";
 export default function NotFound() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-ink-950 p-4 text-center text-signal-paper">
-      <h1 className="mb-4 font-display text-8xl text-signal-orange md:text-[10rem]">404</h1>
+      <h1 className="mb-4 font-display text-8xl text-signal-orange md:text-[10rem]">4?4</h1>
       <p className="mb-8 text-xl md:text-2xl text-signal-paper/70">Looks like this idea didn't make it past the pitch.</p>
       <Link
         href="/"
