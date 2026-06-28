@@ -34,11 +34,11 @@ export function HomePage() {
           colors={LIQUID_COLORS}
           mouseForce={25}
           cursorSize={120}
-          isViscous={false} // Turned off extra physics pass to save massive performance
+          isViscous={false}
           viscous={10}
-          iterationsViscous={16} // Halved for speed
-          iterationsPoisson={16} // Halved for speed
-          resolution={0.25} // Dropped from 0.5 to vastly improve framerate
+          iterationsViscous={16}
+          iterationsPoisson={16}
+          resolution={0.25}
           isBounce={false}
           autoDemo={true}
           autoSpeed={0.3}
@@ -102,7 +102,8 @@ export function HomePage() {
           </motion.a>
         </section>
 
-        <section id="obsessions" className="px-4 py-24 md:px-8 md:py-32">
+        {/* TIGHTENED BOTTOM PADDING HERE */}
+        <section id="obsessions" className="px-4 pt-24 pb-12 md:px-8 md:pt-32 md:pb-16">
           <div className="mx-auto max-w-[1500px]">
             <Reveal>
               <h2 className="max-w-4xl text-4xl leading-[1.05] text-balance md:text-6xl drop-shadow-md">
@@ -114,7 +115,8 @@ export function HomePage() {
           </div>
         </section>
 
-        <section className="px-4 py-24 md:px-8 md:py-36">
+        {/* TIGHTENED TOP PADDING HERE */}
+        <section className="px-4 pb-24 pt-12 md:px-8 md:pb-36 md:pt-16">
           <Reveal className="mx-auto flex max-w-[1500px] flex-col items-center text-center">
             <p className="mb-8 text-2xl text-signal-paper/60 md:text-3xl drop-shadow-md">Enough about my obsessions.</p>
             <Link
@@ -245,7 +247,7 @@ function CorporateHome() {
       <div className="mx-auto max-w-4xl bg-white p-8 md:p-16 shadow-sm border border-neutral-200">
         <header className="border-b border-neutral-300 pb-8 mb-8">
           <h1 className="text-4xl md:text-6xl font-bold mb-4">Aron Reji Koshy</h1>
-          <div className="text-lg text-neutral-600 flex flex-col md:flex-row gap-2 md:gap-6">
+          <div className="text-lg text-neutral-600 flex flex-col md:flex-row gap-2 md:gap-6 flex-wrap">
             <span>aronreji05@gmail.com</span>
             <span>+44 7765 111 016</span>
             <a href="https://www.linkedin.com/in/aron-reji-/" target="_blank" rel="noopener noreferrer" className="text-signal-blue hover:underline">LinkedIn</a>
@@ -255,40 +257,24 @@ function CorporateHome() {
         <section className="mb-12">
           <h2 className="text-2xl font-bold mb-4 uppercase tracking-wider text-neutral-500">Professional Profile</h2>
           <p className="text-lg leading-relaxed text-neutral-800">
-            A final-year Media and Communications student with a passion for building imaginative worlds through advertising and storytelling. I'm drawn to the strategic and conceptual side of campaigns, crafting ideas that connect audiences emotionally while strengthening brand identity. With hands-on experience managing social media for real clients and leading creative teams, I bring both organisation and originality to collaborative creative projects.
+            First Class Media & Communications graduate passionate about creative strategy, brand experiences and ideas that make people think. I enjoy turning human insight into campaigns, speculative design and interactive experiences.
           </p>
         </section>
 
         <section className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 uppercase tracking-wider text-neutral-500">Experience</h2>
-          <div className="space-y-8">
-            <div className="border-l-2 border-neutral-200 pl-6">
-              <h3 className="text-xl font-bold">Social Media Intern — Cray Valley PM FC</h3>
-              <p className="text-neutral-500 font-sans text-sm mb-2">2024 - 2025</p>
-              <p className="text-lg text-neutral-700">Recorded, edited, and posted match highlights for Instagram and X.</p>
+          <h2 className="text-2xl font-bold mb-6 uppercase tracking-wider text-neutral-500">Skills</h2>
+          <div className="space-y-6 border-l-2 border-neutral-200 pl-6">
+            <div>
+              <h3 className="text-lg font-bold text-neutral-800">Thinking</h3>
+              <p className="text-lg text-neutral-600">Creative Strategy, Consumer Insight, Brand Experience</p>
             </div>
-            <div className="border-l-2 border-neutral-200 pl-6">
-              <h3 className="text-xl font-bold">Head of Marketing — Cinematic Arts Society</h3>
-              <p className="text-neutral-500 font-sans text-sm mb-2">2024 - 2025</p>
-              <p className="text-lg text-neutral-700">Designed and executed content planning, schedules and social media engagement.</p>
+            <div>
+              <h3 className="text-lg font-bold text-neutral-800">Making</h3>
+              <p className="text-lg text-neutral-600">Creative Direction, Storytelling, Adobe CC, Figma, AI Creative Workflows, Cursor IDE</p>
             </div>
-          </div>
-        </section>
-
-        <section className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 uppercase tracking-wider text-neutral-500">Key Projects</h2>
-          <div className="space-y-8">
-            <div className="border-l-2 border-neutral-200 pl-6">
-              <h3 className="text-xl font-bold">Pokémon Catchables — Creative Campaign (2024)</h3>
-              <p className="mt-2 text-lg text-neutral-700">Concept development, brand universe creation, and group leadership as Account Director.</p>
-            </div>
-            <div className="border-l-2 border-neutral-200 pl-6">
-              <h3 className="text-xl font-bold">Pokémon Catchables — Brand Storytelling Film (2025)</h3>
-              <p className="mt-2 text-lg text-neutral-700">Short film and campaign exploring emotional tone and intergenerational connection.</p>
-            </div>
-            <div className="border-l-2 border-neutral-200 pl-6">
-              <h3 className="text-xl font-bold">PureGym — Brand Worldbuilding & Customer Journey (2025)</h3>
-              <p className="mt-2 text-lg text-neutral-700">Developed a narrative-driven customer journey with creative touchpoints and interactive website concept.</p>
+            <div>
+              <h3 className="text-lg font-bold text-neutral-800">Working</h3>
+              <p className="text-lg text-neutral-600">Leadership, Collaboration, Presenting</p>
             </div>
           </div>
         </section>
@@ -297,8 +283,7 @@ function CorporateHome() {
           <h2 className="text-2xl font-bold mb-4 uppercase tracking-wider text-neutral-500">Education</h2>
           <div className="border-l-2 border-neutral-200 pl-6">
             <h3 className="text-xl font-bold">University of Greenwich, London</h3>
-            <p className="text-neutral-500 font-sans text-sm mb-2">2023 - Present</p>
-            <p className="text-lg text-neutral-700">B.A. (Hons) Media and Communications</p>
+            <p className="text-lg text-neutral-700">B.A. (Hons) Media and Communications - First Class Honours</p>
           </div>
         </section>
         

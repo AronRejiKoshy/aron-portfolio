@@ -7,11 +7,39 @@ import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.aronreji.com"),
   title: "Aron Reji | Professionally Distracted",
   description:
     "The digital playground of Aron Reji. I bridge the gap between strategy and art direction by building campaigns people actually want to look at.",
+  keywords: [
+    "Creative Strategist",
+    "Advertising",
+    "Brand Strategy",
+    "Campaign",
+    "Portfolio",
+    "Creative",
+    "Speculative Design",
+    "Art Direction",
+    "Aron Reji",
+  ],
   icons: {
     icon: "/favicon.png",
+  },
+  openGraph: {
+    title: "Aron Reji | Professionally Distracted",
+    description: "The digital playground of Aron Reji. I bridge the gap between strategy and art direction by building campaigns people actually want to look at.",
+    url: "https://www.aronreji.com",
+    siteName: "Aron Reji Portfolio",
+    locale: "en_GB",
+    type: "website",
+    images: [
+      {
+        url: "/opengraph-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Aron Reji - Professionally Distracted",
+      },
+    ],
   },
 };
 

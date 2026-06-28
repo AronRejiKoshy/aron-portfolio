@@ -4,7 +4,7 @@ import { ArrowUpRight, RotateCcw } from "lucide-react";
 import { AnimatePresence, motion, useScroll, useSpring, useMotionValueEvent } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { type ReactNode } from "react";
+import { type ReactNode, useEffect } from "react";
 import { useCorporateMode } from "@/components/corporate-mode";
 
 const nav = [
@@ -24,11 +24,17 @@ const getThemeColor = (pathname: string, spotifyMode: boolean) => {
 
 export function SiteChrome({ children }: { children: ReactNode }) {
   const pathname = usePathname();
-  const { corporate, toggleCorporate, setCorporate, spotifyMode, isScrolled, setIsScrolled } = useCorporateMode();
+  // Destructured setSpotifyMode so we can control it from the header
+  const { corporate, toggleCorporate, setCorporate, spotifyMode, setSpotifyMode, isScrolled, setIsScrolled } = useCorporateMode();
   const { scrollYProgress, scrollY } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 110, damping: 28, mass: 0.18 });
 
   const isHomePage = pathname === "/";
+
+  // 1. Automatically kill Spotify mode if they navigate to another page
+  useEffect(() => {
+    setSpotifyMode(false);
+  }, [pathname, setSpotifyMode]);
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     if (latest > 300 && !isScrolled) {
@@ -70,11 +76,12 @@ export function SiteChrome({ children }: { children: ReactNode }) {
         <div className="w-full flex items-center justify-between gap-4">
           <Link
             href="/"
+            onClick={() => setSpotifyMode(false)} // 2. Force reset if they click the logo while on the homepage
             className="relative flex h-8 items-center"
             aria-label="Aron home"
           >
             {corporate ? (
-              <span className="font-corporate text-xl text-black font-bold">Aron Reji Koshy</span>
+              <span className="font-corporate text-xl text-black font-bold">Aron Reji CV Website</span>
             ) : (
               <>
                 {/* Invisible spacer so the layout doesn't collapse */}
@@ -82,14 +89,11 @@ export function SiteChrome({ children }: { children: ReactNode }) {
                   ARON
                 </span>
                 
-                {/* Show the small ARON if we are NOT on the homepage 
-                  OR if we ARE on the homepage and have scrolled down.
-                  This ensures the layoutId is always present for the animation to hook onto!
-                */}
                 {(!isHomePage || isScrolled) && (
                   <motion.span
                     layoutId="aron-main-logo"
-                    className="absolute left-0 font-display text-xl leading-none text-signal-paper md:text-2xl transition-colors hover:text-signal-orange"
+                    // 3. Changed hardcoded orange hover to use the dynamic CSS variable
+                    className="absolute left-0 font-display text-xl leading-none text-signal-paper md:text-2xl transition-colors hover:text-[var(--theme-color)]"
                     transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                   >
                     ARON

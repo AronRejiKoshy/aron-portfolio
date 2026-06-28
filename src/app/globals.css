@@ -55,8 +55,9 @@ body {
   transform: none !important;
 }
 
+/* THE FIX: Now using the dynamic theme color that changes per page/mode */
 ::selection {
-  background: #FF5A00;
+  background: var(--theme-color, #FF5A00);
   color: #050505;
 }
 
