@@ -10,10 +10,10 @@ import { Reveal } from "@/components/reveal";
 import { type Project, projects, experience, type Experience } from "@/data/content";
 
 type ProjectPageProps = {
-  project?: Project; // This is now optional
+  project?: Project;
 };
 
-// Custom theme logic for specific projects (Spotify mode removed to prevent bleeding)
+// Custom theme logic for specific projects
 const getTheme = (slug?: string) => {
   switch (slug) {
     case "face-value":
@@ -42,11 +42,11 @@ const getTheme = (slug?: string) => {
       };
     default:
       return {
-        color: "#d9ff00", // Default signal-lime
-        text: "text-signal-lime",
-        hoverText: "hover:text-signal-lime",
-        groupHoverText: "group-hover:text-signal-lime",
-        groupHoverBg: "group-hover:bg-signal-lime",
+        color: "#FF5A00", 
+        text: "text-signal-orange",
+        hoverText: "hover:text-signal-orange",
+        groupHoverText: "group-hover:text-signal-orange",
+        groupHoverBg: "group-hover:bg-signal-orange",
       };
   }
 };
@@ -55,17 +55,12 @@ export function ProjectPage({ project }: ProjectPageProps) {
   const { corporate } = useCorporateMode();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   
-  // Video Player State
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
 
   const togglePlay = () => {
     if (videoRef.current) {
-      if (isPlaying) {
-        videoRef.current.pause();
-      } else {
-        videoRef.current.play();
-      }
+      isPlaying ? videoRef.current.pause() : videoRef.current.play();
       setIsPlaying(!isPlaying);
     }
   };
@@ -78,7 +73,6 @@ export function ProjectPage({ project }: ProjectPageProps) {
     }
   };
 
-  // Determine active theme based on current project
   const activeTheme = getTheme(project?.slug);
 
   // ==========================================
@@ -87,22 +81,29 @@ export function ProjectPage({ project }: ProjectPageProps) {
   if (!project) {
     if (corporate) {
       return (
-        <main className="bg-white px-4 pb-20 pt-28 font-corporate text-black md:px-8 min-h-screen">
-          <section className="mx-auto max-w-5xl">
-            <h1 className="text-5xl leading-tight md:text-7xl mb-12">Selected Professional Work</h1>
-            <div className="space-y-6">
+        <main className="bg-[#f3f4f6] px-4 pb-20 pt-28 font-corporate text-black md:px-8 min-h-screen">
+          <section className="mx-auto max-w-4xl bg-white p-8 md:p-16 shadow-sm border border-neutral-200">
+            <h1 className="text-4xl md:text-5xl font-bold mb-12 uppercase tracking-wider text-neutral-500 border-b border-neutral-300 pb-6">
+              Selected Professional Work
+            </h1>
+            <div className="space-y-16">
               {projects.map((proj) => (
-                <article key={proj.slug} className="border border-neutral-300 p-5">
-                  <h2 className="text-2xl">{proj.corporateTitle}</h2>
-                  <p className="mt-3 text-lg">
-                    Project delivered strategic recommendations through research, communication planning and stakeholder-focused creative outputs.
-                  </p>
-                  <Link
-                    href={`/work/${proj.slug}`}
-                    className="mt-4 inline-block border border-signal-blue bg-signal-blue px-4 py-2 text-white"
-                  >
-                    Read case study
-                  </Link>
+                <article key={proj.slug} className="flex flex-col md:flex-row gap-8 items-start border-b border-neutral-200 pb-16 last:border-0 last:pb-0">
+                  <div className="w-full md:w-1/2 relative aspect-[16/10] overflow-hidden border border-neutral-200 shadow-sm bg-neutral-100">
+                    <Image src={proj.image} alt={proj.alt} fill className="object-cover" />
+                  </div>
+                  <div className="w-full md:w-1/2 flex flex-col justify-center">
+                    <h2 className="text-2xl font-bold mb-3">{proj.corporateTitle}</h2>
+                    <p className="text-lg text-neutral-700 leading-relaxed mb-6">
+                      {proj.corporateSummary}
+                    </p>
+                    <Link
+                      href={`/work/${proj.slug}`}
+                      className="inline-block border border-signal-blue text-signal-blue hover:bg-signal-blue hover:text-white transition-colors px-6 py-3 font-bold w-fit"
+                    >
+                      View Case Study &rarr;
+                    </Link>
+                  </div>
                 </article>
               ))}
             </div>
@@ -154,7 +155,7 @@ export function ProjectPage({ project }: ProjectPageProps) {
                             priority={index === 0}
                           />
                           <div className="absolute inset-x-0 bottom-0 flex justify-end p-5 md:p-7">
-                            <span className={`grid h-11 w-11 shrink-0 place-items-center rounded-brand border border-white/18 transition-all duration-500 text-signal-lime ${projTheme.groupHoverBg} group-hover:text-ink-950 group-hover:border-transparent`}>
+                            <span className={`grid h-11 w-11 shrink-0 place-items-center rounded-brand border border-white/18 transition-all duration-500 text-signal-orange ${projTheme.groupHoverBg} group-hover:text-ink-950 group-hover:border-transparent`}>
                               <ArrowRight aria-hidden="true" size={20} />
                             </span>
                           </div>
@@ -168,7 +169,6 @@ export function ProjectPage({ project }: ProjectPageProps) {
           </div>
         </section>
 
-        {/* Added id="other-places" so the What Do You Call button scrolls directly here */}
         <section id="other-places" className="border-t border-white/10 px-4 py-24 md:px-8 md:py-32">
           <div className="mx-auto max-w-[1500px]">
             <Reveal>
@@ -186,7 +186,7 @@ export function ProjectPage({ project }: ProjectPageProps) {
             <Reveal className="mt-28 flex justify-center">
               <Link
                 href="/about"
-                className="group inline-flex items-center gap-4 rounded-full border border-white/14 bg-white/5 px-8 py-4 text-lg text-signal-paper transition-all hover:border-signal-lime hover:text-signal-lime"
+                className="group inline-flex items-center gap-4 rounded-full border border-white/14 bg-white/5 px-8 py-4 text-lg text-signal-paper transition-all hover:border-signal-orange hover:text-signal-orange"
               >
                 <span>I take it you&apos;re still curious <i>about me</i></span>
                 <ArrowRight size={20} className="transition-transform duration-300 group-hover:translate-x-1" />
@@ -204,7 +204,6 @@ export function ProjectPage({ project }: ProjectPageProps) {
   const index = projects.findIndex((item) => item.slug === project.slug);
 
   if (corporate) {
-    // Basic corporate fallback navigation
     const nextProjectCorp = projects[(index + 1) % projects.length];
     return <CorporateProject project={project} nextProject={nextProjectCorp} />;
   }
@@ -335,7 +334,6 @@ export function ProjectPage({ project }: ProjectPageProps) {
       <section className="border-t border-white/10 px-4 py-16 md:px-8">
         <div className="mx-auto flex max-w-[1500px] flex-col gap-10 sm:flex-row sm:items-center sm:justify-between">
           
-          {/* LEFT SIDE: PREVIOUS NAVIGATION */}
           {index === 0 ? (
             <div className="group inline-flex max-w-xl items-center gap-5 text-left opacity-40 cursor-not-allowed">
               <ArrowLeft aria-hidden="true" size={32} className="shrink-0 text-signal-paper/58" />
@@ -361,7 +359,6 @@ export function ProjectPage({ project }: ProjectPageProps) {
             </Link>
           )}
 
-          {/* RIGHT SIDE: NEXT NAVIGATION OR OTHER WORK */}
           {index === projects.length - 1 ? (
             <Link
               href="/work#other-places"
@@ -369,11 +366,11 @@ export function ProjectPage({ project }: ProjectPageProps) {
             >
               <div className="flex flex-col items-end">
                 <span className="mb-2 text-sm text-signal-paper/58">Still curious?</span>
-                <span className="text-2xl leading-tight text-signal-paper transition-colors group-hover:text-signal-lime md:text-4xl">
+                <span className="text-2xl leading-tight text-signal-paper transition-colors group-hover:text-signal-orange md:text-4xl">
                   Not satisfied with my work? Check out some other things I've been working on.
                 </span>
               </div>
-              <ArrowRight aria-hidden="true" size={32} className="shrink-0 text-signal-paper/58 transition-colors group-hover:text-signal-lime" />
+              <ArrowRight aria-hidden="true" size={32} className="shrink-0 text-signal-paper/58 transition-colors group-hover:text-signal-orange" />
             </Link>
           ) : (
             <Link
@@ -393,7 +390,6 @@ export function ProjectPage({ project }: ProjectPageProps) {
         </div>
       </section>
 
-      {/* Lightbox Modal */}
       <AnimatePresence>
         {selectedImage && (
           <motion.div
@@ -477,7 +473,7 @@ function ExperienceItem({ item, accentText }: { item: Experience; accentText: st
             {item.title}
           </h3>
           {item.isWip && (
-            <span className="hidden rounded-full border border-signal-lime bg-signal-lime/10 px-2 py-1 text-[10px] font-medium tracking-widest text-signal-lime sm:inline-block">
+            <span className="hidden rounded-full border border-signal-orange bg-signal-orange/10 px-2 py-1 text-[10px] font-medium tracking-widest text-signal-orange sm:inline-block">
               IN PROGRESS
             </span>
           )}
@@ -554,33 +550,56 @@ function ExperienceItem({ item, accentText }: { item: Experience; accentText: st
   );
 }
 
+// ----------------------------------------------------
+// THE REBUILT CORPORATE PROJECT COMPONENT (BORING COPY)
+// ----------------------------------------------------
 function CorporateProject({ project, nextProject }: { project: Project; nextProject: Project }) {
   return (
-    <main className="bg-white px-4 pb-20 pt-28 font-corporate text-black md:px-8">
-      <article className="mx-auto max-w-5xl">
-        <Link href="/work" className="text-signal-blue underline">
-          Back to portfolio overview
+    <main className="bg-[#f3f4f6] px-4 pb-32 pt-28 font-corporate text-black md:px-8 min-h-screen">
+      <article className="mx-auto max-w-4xl bg-white p-8 md:p-16 shadow-sm border border-neutral-200">
+        <Link href="/work" className="text-signal-blue underline font-bold tracking-wide text-sm uppercase">
+          &larr; Back to portfolio overview
         </Link>
-        <h1 className="mt-8 text-5xl leading-tight">{project.corporateTitle}</h1>
-        <p className="mt-6 text-xl leading-relaxed">
+        <h1 className="mt-8 text-4xl md:text-6xl font-bold mb-4">{project.corporateTitle}</h1>
+        <p className="text-lg leading-relaxed text-neutral-800">
           This project demonstrates transferable communication skills, research awareness, creative thinking and outcome-oriented delivery.
         </p>
-        <div className="mt-8 border border-neutral-300 p-6">
-          {["Problem", "Insight", "Solution", "Outcome"].map((title) => (
-            <section key={title} className="border-b border-neutral-300 py-5 last:border-b-0">
-              <h2 className="text-2xl">{title}</h2>
-              <p className="mt-2 text-lg">
-                Professional project activity supported by planning, ideation, presentation and implementation considerations.
+
+        {/* Hero Image injected here for Corporate Mode */}
+        <div className="mt-8 mb-12 relative aspect-[16/9] w-full overflow-hidden border border-neutral-200 shadow-sm bg-neutral-100">
+          <Image
+            src={project.image}
+            alt={project.alt}
+            fill
+            className="object-cover"
+          />
+        </div>
+
+        <div className="space-y-8 border-l-2 border-neutral-200 pl-6">
+          {[
+            { title: "Executive Summary", body: project.corporateSummary },
+            { title: "Problem Statement", body: project.corporateProblem },
+            { title: "Strategic Insight", body: project.corporateInsight },
+            { title: "Proposed Solution", body: project.corporateSolution },
+            { title: "Key Deliverables & ROI", body: project.corporateOutcome },
+          ].map((section) => (
+            <section key={section.title}>
+              <h2 className="text-xl font-bold uppercase tracking-wider text-neutral-500">{section.title}</h2>
+              <p className="mt-2 text-lg text-neutral-700 leading-relaxed">
+                {section.body}
               </p>
             </section>
           ))}
         </div>
-        <Link
-          href={`/work/${nextProject.slug}`}
-          className="mt-8 inline-block border border-signal-blue bg-signal-blue px-5 py-3 text-white"
-        >
-          Next case study
-        </Link>
+
+        <div className="mt-16 pt-8 border-t border-neutral-300">
+          <Link
+            href={`/work/${nextProject.slug}`}
+            className="inline-block border border-signal-blue bg-signal-blue px-6 py-3 text-white font-bold hover:bg-blue-700 transition-colors"
+          >
+            Next Case Study &rarr;
+          </Link>
+        </div>
       </article>
     </main>
   );

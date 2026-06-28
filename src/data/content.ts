@@ -13,6 +13,12 @@ export type Project = {
   solution: string;
   outcome: string;
   gallery: { image: string; caption: string }[];
+  // The boring LinkedIn fields
+  corporateSummary: string;
+  corporateProblem: string;
+  corporateInsight: string;
+  corporateSolution: string;
+  corporateOutcome: string;
 };
 
 export type Obsession = {
@@ -93,7 +99,12 @@ export const projects: Project[] = [
         image: "/work/face-value-gal-3.png",
         caption: "The live exhibition. A physical translation of the game's mechanics into an interactive suspect board."
       }
-    ]
+    ],
+    corporateSummary: "A research-led brand strategy initiative exploring how consumer perception and unconscious bias impact brand equity.",
+    corporateProblem: "We noticed a gap in how people evaluate brands. Consumers believe they make rational choices, but our research showed they often rely heavily on visual cues and social reputation instead.",
+    corporateInsight: "Brand identity acts as a shortcut for trust. We realized the best way to demonstrate this was to put consumers in a scenario where they had to rely on these shortcuts under pressure.",
+    corporateSolution: "Developed and launched an interactive board game designed to test brand bias in real-time, effectively turning consumer research into an engaging physical experience.",
+    corporateOutcome: "Successfully showcased the project at the 2026 Academic Exhibition, receiving highly positive feedback for strategic thinking and creative execution. Excited to leverage these learnings in my next role! 🚀"
   },
   {
     slug: "twinings-loneliness",
@@ -126,7 +137,12 @@ export const projects: Project[] = [
         image: "/work/twinings-gal-3.png",
         caption: "Personalised tea tags acting as physical prompts to carry the conversation offline."
       }
-    ]
+    ],
+    corporateSummary: "A multi-channel community engagement campaign designed to modernize a legacy brand and drive connection among younger demographics.",
+    corporateProblem: "Legacy tea brands are struggling to maintain relevance with younger audiences, and tea consumption has increasingly become a solitary activity rather than a social one.",
+    corporateInsight: "We identified an opportunity to reposition the brand. Tea naturally creates a slow, low-pressure environment, making it the perfect catalyst for meaningful conversations and community building.",
+    corporateSolution: "Designed a hybrid digital-to-physical campaign, starting with a collaborative activation in Minecraft and expanding into real-world pop-up spaces and direct-mail touchpoints.",
+    corporateOutcome: "Delivered a comprehensive campaign framework that successfully bridged digital platforms with physical experiences. Grateful to my incredible team for their hard work and dedication. #TeamWork #Innovation 🤝"
   },
   {
     slug: "what-do-you-call",
@@ -160,7 +176,12 @@ export const projects: Project[] = [
         image: "/work/what-do-you-call-gal-3.png",
         caption: "A self-replenishing system. Every time a platform bans a word, a new slang term immediately takes its place to keep the conversation going."
       }
-    ]
+    ],
+    corporateSummary: "A strategic digital communications framework designed to navigate social media moderation and protect important consumer conversations.",
+    corporateProblem: "Crucial conversations around women’s health are frequently flagged and removed by social media algorithms, negatively impacting community engagement and education.",
+    corporateInsight: "We recognized that while automated moderation filters are strict, they struggle to understand cultural nuances, creative metaphors, and coded language.",
+    corporateSolution: "Created a dynamic, culturally relevant language system that allows users to bypass content filters, ensuring health-related discussions remain accessible and active.",
+    corporateOutcome: "Pitched a complete strategic roadmap for the D&AD New Blood 2026 initiative. Thrilled to continue pushing the envelope and driving creative problem-solving in the digital space. 💡"
   },
 ];
 

@@ -9,7 +9,7 @@ import { useCorporateMode } from "@/components/corporate-mode";
 import { Reveal } from "@/components/reveal";
 import { obsessions } from "@/data/content";
 
-// Dynamically import the LiquidEther component so it renders on the client side without SSR crashes
+// Dynamically import the LiquidEther component
 const LiquidEther = dynamic(() => import("@/components/liquid-ether"), { ssr: false });
 
 export function HomePage() {
@@ -25,12 +25,12 @@ export function HomePage() {
   return (
     <main className="relative bg-ink-950 text-signal-paper min-h-screen">
       
-      {/* BACKGROUND SIMULATION */}
-      <div className="fixed inset-0 z-0">
+      {/* BACKGROUND SIMULATION - Now Brighter & White/Silver */}
+      <div className="absolute inset-0 z-0 opacity-80 mix-blend-screen">
         <LiquidEther
-          colors={['#FF5A00', '#0a0a0a', '#050505']}
-          mouseForce={30}
-          cursorSize={150}
+          colors={['#ffffff', '#444444', '#050505']}
+          mouseForce={40}
+          cursorSize={200}
           isViscous={true}
           viscous={25}
           iterationsViscous={32}
@@ -38,8 +38,8 @@ export function HomePage() {
           resolution={0.5}
           isBounce={false}
           autoDemo={true}
-          autoSpeed={0.3}
-          autoIntensity={1.5}
+          autoSpeed={0.5}
+          autoIntensity={3.0}
           takeoverDuration={0.25}
           autoResumeDelay={3000}
           autoRampDuration={0.6}
@@ -68,10 +68,10 @@ export function HomePage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
             >
-              <p className="mt-2 max-w-4xl text-3xl leading-[1.05] text-pretty text-signal-paper md:text-5xl lg:text-6xl">
+              <p className="mt-2 max-w-4xl text-3xl leading-[1.05] text-pretty text-signal-paper md:text-5xl lg:text-6xl drop-shadow-md">
                 I ask questions until something interesting happens.
               </p>
-              <p className="mt-6 max-w-2xl text-xl leading-relaxed text-signal-paper/72 md:text-2xl">
+              <p className="mt-6 max-w-2xl text-xl leading-relaxed text-signal-paper/72 md:text-2xl drop-shadow-md">
                 <span className="block">Sometimes it becomes a campaign.</span>
                 <span className="block">Sometimes it becomes a website or a board game.</span>
                 <span className="block">Most of the times it becomes a problem for everyone involved.</span>
@@ -84,10 +84,10 @@ export function HomePage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="mx-auto mt-12 md:mt-24 flex w-full max-w-[1500px] items-center gap-3 text-sm text-signal-paper/56"
+            className="mx-auto mt-12 md:mt-24 flex w-full max-w-[1500px] items-center gap-3 text-sm text-signal-paper/56 drop-shadow-md"
             aria-label="Scroll to obsessions"
           >
-            <span className="flex h-10 w-7 items-start justify-center rounded-full border border-white/18 pt-2">
+            <span className="flex h-10 w-7 items-start justify-center rounded-full border border-white/18 pt-2 backdrop-blur-sm bg-black/20">
               <motion.span
                 animate={{ y: [0, 8, 0] }}
                 transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
@@ -99,11 +99,10 @@ export function HomePage() {
           </motion.a>
         </section>
 
-        {/* Removed scanline and border classes here! */}
         <section id="obsessions" className="px-4 py-24 md:px-8 md:py-32">
           <div className="mx-auto max-w-[1500px]">
             <Reveal>
-              <h2 className="max-w-4xl text-4xl leading-[1.05] text-balance md:text-6xl">
+              <h2 className="max-w-4xl text-4xl leading-[1.05] text-balance md:text-6xl drop-shadow-md">
                 Things I&apos;ve become obsessed with recently <span className="text-signal-paper/40 italic font-serif text-2xl md:text-4xl align-middle"> // Vol. 01</span>
               </h2>
             </Reveal>
@@ -114,10 +113,10 @@ export function HomePage() {
 
         <section className="px-4 py-24 md:px-8 md:py-36">
           <Reveal className="mx-auto flex max-w-[1500px] flex-col items-center text-center">
-            <p className="mb-8 text-2xl text-signal-paper/60 md:text-3xl">Enough about my obsessions.</p>
+            <p className="mb-8 text-2xl text-signal-paper/60 md:text-3xl drop-shadow-md">Enough about my obsessions.</p>
             <Link
               href="/work"
-              className={`group inline-flex items-center gap-4 rounded-full border border-white/14 bg-white/5 px-8 py-4 text-lg text-signal-paper transition-all ${hoverBorderText}`}
+              className={`group inline-flex items-center gap-4 rounded-full border border-white/14 bg-black/40 backdrop-blur-md px-8 py-4 text-lg text-signal-paper transition-all shadow-lg ${hoverBorderText}`}
             >
               I'm sure you'd like to see my actual work now.
               <ArrowRight size={20} className="transition-transform duration-300 group-hover:translate-x-1" />
@@ -185,12 +184,12 @@ function ObsessionsCarousel({
             }`}
             onClick={() => isBranding && setSpotifyMode(!spotifyMode)}
           >
-            <span className="font-mono text-lg text-signal-paper/38 md:text-2xl">
+            <span className="font-mono text-lg text-signal-paper/38 md:text-2xl drop-shadow-md">
               {String(currentIndex + 1).padStart(2, "0")}
             </span>
 
             <h3
-              className={`text-5xl leading-none transition-colors duration-500 md:text-7xl lg:text-8xl ${
+              className={`text-5xl leading-none transition-colors duration-500 md:text-7xl lg:text-8xl drop-shadow-md ${
                 isBranding && spotifyMode ? "text-[#1DB954]" : "text-signal-paper"
               }`}
             >
@@ -212,7 +211,7 @@ function ObsessionsCarousel({
 
             <div className="relative">
               <p
-                className={`text-balance text-xl leading-relaxed transition-opacity duration-300 md:text-2xl lg:text-3xl ${
+                className={`text-balance text-xl leading-relaxed transition-opacity duration-300 md:text-2xl lg:text-3xl drop-shadow-md ${
                   isBranding && spotifyMode
                     ? "pointer-events-none opacity-0"
                     : "text-signal-paper/60 opacity-100"
@@ -222,7 +221,7 @@ function ObsessionsCarousel({
               </p>
               {isBranding && (
                 <span
-                  className={`absolute left-0 top-1/2 -translate-y-1/2 whitespace-nowrap text-lg transition-opacity duration-300 md:text-2xl ${
+                  className={`absolute left-0 top-1/2 -translate-y-1/2 whitespace-nowrap text-lg transition-opacity duration-300 md:text-2xl drop-shadow-md ${
                     spotifyMode ? "text-[#1DB954] opacity-100" : "pointer-events-none opacity-0"
                   }`}
                 >
@@ -237,13 +236,10 @@ function ObsessionsCarousel({
   );
 }
 
-// FULLY REBUILT CORPORATE MODE (Populated via PDF CV)
 function CorporateHome() {
   return (
     <main className="bg-[#f3f4f6] px-4 pb-32 pt-28 font-corporate text-black md:px-8 min-h-screen">
       <div className="mx-auto max-w-4xl bg-white p-8 md:p-16 shadow-sm border border-neutral-200">
-        
-        {/* Contact Header */}
         <header className="border-b border-neutral-300 pb-8 mb-8">
           <h1 className="text-4xl md:text-6xl font-bold mb-4">Aron Reji Koshy</h1>
           <div className="text-lg text-neutral-600 flex flex-col md:flex-row gap-2 md:gap-6">
@@ -253,7 +249,6 @@ function CorporateHome() {
           </div>
         </header>
 
-        {/* Profile */}
         <section className="mb-12">
           <h2 className="text-2xl font-bold mb-4 uppercase tracking-wider text-neutral-500">Professional Profile</h2>
           <p className="text-lg leading-relaxed text-neutral-800">
@@ -261,7 +256,6 @@ function CorporateHome() {
           </p>
         </section>
 
-        {/* Experience */}
         <section className="mb-12">
           <h2 className="text-2xl font-bold mb-6 uppercase tracking-wider text-neutral-500">Experience</h2>
           <div className="space-y-8">
@@ -278,7 +272,6 @@ function CorporateHome() {
           </div>
         </section>
 
-        {/* Selected Work */}
         <section className="mb-12">
           <h2 className="text-2xl font-bold mb-6 uppercase tracking-wider text-neutral-500">Key Projects</h2>
           <div className="space-y-8">
@@ -297,7 +290,6 @@ function CorporateHome() {
           </div>
         </section>
 
-        {/* Education */}
         <section className="mb-12">
           <h2 className="text-2xl font-bold mb-4 uppercase tracking-wider text-neutral-500">Education</h2>
           <div className="border-l-2 border-neutral-200 pl-6">
@@ -307,7 +299,6 @@ function CorporateHome() {
           </div>
         </section>
         
-        {/* CV Download CTA */}
         <div className="mt-16 pt-8 border-t border-neutral-300">
           <a 
             href="/aron-reji-cv.pdf" 

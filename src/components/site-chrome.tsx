@@ -74,26 +74,28 @@ export function SiteChrome({ children }: { children: ReactNode }) {
             aria-label="Aron home"
           >
             {corporate ? (
-              <span className="font-corporate text-xl text-black">Aron Reji CV Website</span>
-            ) : isHomePage ? (
+              <span className="font-corporate text-xl text-black font-bold">Aron Reji Koshy</span>
+            ) : (
               <>
+                {/* Invisible spacer so the layout doesn't collapse */}
                 <span className="font-display text-xl leading-none opacity-0 md:text-2xl">
                   ARON
                 </span>
-                {isScrolled && (
+                
+                {/* Show the small ARON if we are NOT on the homepage 
+                  OR if we ARE on the homepage and have scrolled down.
+                  This ensures the layoutId is always present for the animation to hook onto!
+                */}
+                {(!isHomePage || isScrolled) && (
                   <motion.span
                     layoutId="aron-main-logo"
-                    className="absolute left-0 font-display text-xl leading-none text-signal-paper md:text-2xl"
+                    className="absolute left-0 font-display text-xl leading-none text-signal-paper md:text-2xl transition-colors hover:text-signal-orange"
                     transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                   >
                     ARON
                   </motion.span>
                 )}
               </>
-            ) : (
-              <span className="font-display text-xl leading-none text-signal-paper md:text-2xl">
-                ARON
-              </span>
             )}
           </Link>
 
@@ -101,7 +103,7 @@ export function SiteChrome({ children }: { children: ReactNode }) {
             <AnimatePresence>
               {nav.map((item, index) => {
                 const active = pathname.startsWith(item.href);
-                const showNav = corporate || pathname !== "/" || isScrolled;
+                const showNav = corporate || !isHomePage || isScrolled;
 
                 return (
                   showNav && (
