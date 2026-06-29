@@ -8,6 +8,9 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.aronreji.com"),
+  alternates: {
+    canonical: "/", // This tells Google: "Yes, the www version is the master copy!"
+  },
   title: "Aron Reji | Professionally Distracted",
   description:
     "The digital playground of Aron Reji. I bridge the gap between strategy and art direction by building campaigns people actually want to look at.",
