@@ -4,7 +4,7 @@ import { ArrowUpRight, RotateCcw } from "lucide-react";
 import { AnimatePresence, motion, useScroll, useSpring, useMotionValueEvent } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { type ReactNode, useEffect } from "react";
+import { type ReactNode, useEffect, useState } from "react";
 import { useCorporateMode } from "@/components/corporate-mode";
 
 const nav = [
@@ -24,23 +24,34 @@ const getThemeColor = (pathname: string, spotifyMode: boolean) => {
 
 export function SiteChrome({ children }: { children: ReactNode }) {
   const pathname = usePathname();
-  // Destructured setSpotifyMode so we can control it from the header
   const { corporate, toggleCorporate, setCorporate, spotifyMode, setSpotifyMode, isScrolled, setIsScrolled } = useCorporateMode();
+  
+  const [isHidden, setIsHidden] = useState(false);
+  
   const { scrollYProgress, scrollY } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 110, damping: 28, mass: 0.18 });
 
   const isHomePage = pathname === "/";
 
-  // 1. Automatically kill Spotify mode if they navigate to another page
   useEffect(() => {
     setSpotifyMode(false);
   }, [pathname, setSpotifyMode]);
 
   useMotionValueEvent(scrollY, "change", (latest) => {
+    const previous = scrollY.getPrevious() ?? 0;
+    
+    // 1. Toggle isScrolled for the logo animation (happens at 300px)
     if (latest > 300 && !isScrolled) {
       setIsScrolled(true);
     } else if (latest <= 300 && isScrolled) {
       setIsScrolled(false);
+    }
+
+    // 2. Smart Hide Logic: Lowered to 400px so it hides right after the hero text
+    if (latest > previous && latest > 400) {
+      setIsHidden(true);
+    } else {
+      setIsHidden(false);
     }
   });
 
@@ -66,7 +77,9 @@ export function SiteChrome({ children }: { children: ReactNode }) {
         </>
       ) : null}
 
-      <header
+      <motion.header
+        animate={{ y: isHidden && !corporate ? "-100%" : 0 }}
+        transition={{ duration: 0.3, ease: "easeInOut" }}
         className={
           corporate
             ? "fixed left-0 right-0 top-0 z-50 border-b border-neutral-300 bg-white px-4 py-3 md:px-8"
@@ -76,7 +89,7 @@ export function SiteChrome({ children }: { children: ReactNode }) {
         <div className="w-full flex items-center justify-between gap-4">
           <Link
             href="/"
-            onClick={() => setSpotifyMode(false)} // 2. Force reset if they click the logo while on the homepage
+            onClick={() => setSpotifyMode(false)}
             className="relative flex h-8 items-center"
             aria-label="Aron home"
           >
@@ -84,7 +97,6 @@ export function SiteChrome({ children }: { children: ReactNode }) {
               <span className="font-corporate text-xl text-black font-bold">Aron Reji CV Website</span>
             ) : (
               <>
-                {/* Invisible spacer so the layout doesn't collapse */}
                 <span className="font-display text-xl leading-none opacity-0 md:text-2xl">
                   ARON
                 </span>
@@ -92,7 +104,6 @@ export function SiteChrome({ children }: { children: ReactNode }) {
                 {(!isHomePage || isScrolled) && (
                   <motion.span
                     layoutId="aron-main-logo"
-                    // 3. Changed hardcoded orange hover to use the dynamic CSS variable
                     className="absolute left-0 font-display text-xl leading-none text-signal-paper md:text-2xl transition-colors hover:text-[var(--theme-color)]"
                     transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                   >
@@ -145,7 +156,7 @@ export function SiteChrome({ children }: { children: ReactNode }) {
             </AnimatePresence>
           </nav>
         </div>
-      </header>
+      </motion.header>
 
       {children}
 

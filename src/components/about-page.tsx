@@ -94,17 +94,15 @@ export function AboutPage() {
         </div>
       </section>
 
-      {/* FINAL CTA TO CONTACT PAGE */}
+      {/* FINAL CTA TO CONTACT PAGE (Bug Fixed: Removed Reveal so it always renders) */}
       <section className="mx-auto mt-16 max-w-[1500px] flex justify-center">
-        <Reveal>
-          <Link
-            href="/contact"
-            className="group inline-flex items-center gap-4 rounded-full border border-white/14 bg-white/5 px-8 py-4 text-lg text-signal-paper transition-all hover:border-signal-orange hover:text-signal-orange"
-          >
-            <span>Enough about Me, let's hear from You.</span>
-            <ArrowRight size={20} className="transition-transform duration-300 group-hover:translate-x-1" />
-          </Link>
-        </Reveal>
+        <Link
+          href="/contact"
+          className="group inline-flex items-center gap-4 rounded-full border border-white/14 bg-white/5 px-8 py-4 text-lg text-signal-paper transition-all hover:border-signal-orange hover:text-signal-orange"
+        >
+          <span>Enough about Me, let's hear from You.</span>
+          <ArrowRight size={20} className="transition-transform duration-300 group-hover:translate-x-1" />
+        </Link>
       </section>
     </main>
   );

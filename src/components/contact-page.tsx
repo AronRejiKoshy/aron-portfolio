@@ -117,10 +117,10 @@ export function ContactPage() {
         </Reveal>
       </div>
 
-      {/* RIGHT SIDE: Interactive Lanyard with boundary */}
-      <div className="w-full md:w-1/2 h-[50vh] md:h-[80vh] relative flex flex-col items-center justify-center rounded-[2rem] border border-white/10 bg-white/[0.02] overflow-hidden">
+      {/* RIGHT SIDE: Interactive Lanyard with boundary (Bug Fixed: Added subtle orange glow) */}
+      <div className="w-full md:w-1/2 h-[50vh] md:h-[80vh] relative flex flex-col items-center justify-center rounded-[2rem] border border-white/10 bg-[radial-gradient(circle_at_center,rgba(255,90,0,0.15)_0%,transparent_60%)] overflow-hidden">
         
-        {/* Interact Prompt Label - Lowered from bottom-6 to bottom-3 */}
+        {/* Interact Prompt Label */}
         <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-10 flex items-center gap-2 rounded-full border border-signal-orange/30 bg-signal-orange/10 px-4 py-2 text-sm text-signal-orange backdrop-blur-md pointer-events-none">
           <MousePointer2 size={16} />
           <span>Interact with me</span>
