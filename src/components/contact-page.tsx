@@ -111,7 +111,7 @@ export function ContactPage() {
               <div>
                 <p className="text-sm text-signal-paper/40 mb-2">The Boring Stuff</p>
                 <a 
-                  href="/aron-reji-cv.pdf" 
+                  href="/aron-reji-cv-v2.pdf" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="group inline-flex items-center gap-3 text-xl md:text-2xl text-white transition-colors hover:text-signal-orange"

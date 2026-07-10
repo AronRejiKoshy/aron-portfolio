@@ -289,7 +289,7 @@ function CorporateHome() {
         
         <div className="mt-16 pt-8 border-t border-neutral-300">
           <a 
-            href="/aron-reji-cv.pdf" 
+            href="/aron-reji-cv-v2.pdf" 
             target="_blank" 
             rel="noopener noreferrer" 
             className="inline-block border border-signal-blue bg-signal-blue px-6 py-3 text-white font-bold hover:bg-blue-700 transition-colors"
