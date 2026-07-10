@@ -112,7 +112,8 @@ export function ContactPage() {
                 <p className="text-sm text-signal-paper/40 mb-2">The Boring Stuff</p>
                 <a 
                   href="/aron-reji-cv.pdf" 
-                  download
+                  target="_blank" 
+                  rel="noopener noreferrer"
                   className="group inline-flex items-center gap-3 text-xl md:text-2xl text-white transition-colors hover:text-signal-orange"
                 >
                   Download CV 
