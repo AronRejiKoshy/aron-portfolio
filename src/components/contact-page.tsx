@@ -6,8 +6,16 @@ import { ArrowUpRight, Copy, Check, MousePointer2, FileText } from "lucide-react
 import dynamic from "next/dynamic";
 import { useState } from "react";
 
-// Dynamically import the Lanyard so it only renders on the client
-const Lanyard = dynamic(() => import("@/components/lanyard"), { ssr: false });
+// Dynamically import the Lanyard with a sleek loading state
+const Lanyard = dynamic(() => import("@/components/lanyard"), { 
+  ssr: false,
+  loading: () => (
+    <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 opacity-50 z-0">
+      <div className="h-6 w-6 animate-spin rounded-full border-2 border-signal-orange border-t-transparent"></div>
+      <span className="font-display text-sm tracking-widest text-signal-orange uppercase">Loading Interactive</span>
+    </div>
+  )
+});
 
 export function ContactPage() {
   const { corporate } = useCorporateMode();
@@ -117,7 +125,7 @@ export function ContactPage() {
         </Reveal>
       </div>
 
-      {/* RIGHT SIDE: Interactive Lanyard with boundary (Bug Fixed: Added subtle orange glow) */}
+      {/* RIGHT SIDE: Interactive Lanyard with restored Halloween glow */}
       <div className="w-full md:w-1/2 h-[50vh] md:h-[80vh] relative flex flex-col items-center justify-center rounded-[2rem] border border-white/10 bg-[radial-gradient(circle_at_center,rgba(255,90,0,0.15)_0%,transparent_60%)] overflow-hidden">
         
         {/* Interact Prompt Label */}
@@ -127,7 +135,7 @@ export function ContactPage() {
         </div>
 
         {/* Lanyard Canvas */}
-        <div className="absolute inset-0">
+        <div className="absolute inset-0 z-10">
           <Lanyard 
             position={[0, 0, 20]} 
             gravity={[0, -40, 0]} 

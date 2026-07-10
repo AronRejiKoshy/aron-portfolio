@@ -87,10 +87,17 @@ export function ProjectPage({ project }: ProjectPageProps) {
               Selected Professional Work
             </h1>
             <div className="space-y-16">
-              {projects.map((proj) => (
+              {projects.map((proj, index) => (
                 <article key={proj.slug} className="flex flex-col md:flex-row gap-8 items-start border-b border-neutral-200 pb-16 last:border-0 last:pb-0">
                   <div className="w-full md:w-1/2 relative aspect-[16/10] overflow-hidden border border-neutral-200 shadow-sm bg-neutral-100">
-                    <Image src={proj.image} alt={proj.alt} fill className="object-cover" />
+                    <Image 
+                      src={proj.image} 
+                      alt={proj.alt} 
+                      fill 
+                      sizes="(min-width: 768px) 50vw, 100vw"
+                      priority={index === 0}
+                      className="object-cover" 
+                    />
                   </div>
                   <div className="w-full md:w-1/2 flex flex-col justify-center">
                     <h2 className="text-2xl font-bold mb-3">{proj.corporateTitle}</h2>
@@ -149,7 +156,6 @@ export function ProjectPage({ project }: ProjectPageProps) {
                             src={proj.image}
                             alt={proj.alt}
                             fill
-                            quality={100}
                             sizes="(min-width: 1024px) 60vw, 100vw"
                             className="object-cover transition duration-700 group-hover:scale-[1.035]"
                             priority={index === 0}
@@ -268,7 +274,6 @@ export function ProjectPage({ project }: ProjectPageProps) {
                   src={project.image}
                   alt={project.alt}
                   fill
-                  quality={100}
                   sizes="100vw"
                   priority
                   className="object-cover"
@@ -312,7 +317,6 @@ export function ProjectPage({ project }: ProjectPageProps) {
                       src={item.image}
                       alt=""
                       fill
-                      quality={100}
                       sizes="(min-width: 768px) 33vw, 100vw"
                       className="object-cover transition-transform duration-700 group-hover:scale-105"
                       style={{
@@ -418,7 +422,6 @@ export function ProjectPage({ project }: ProjectPageProps) {
                 src={selectedImage}
                 alt="Enlarged gallery view"
                 fill
-                quality={100}
                 className="object-contain"
                 sizes="90vw"
               />
@@ -517,7 +520,6 @@ function ExperienceItem({ item, accentText }: { item: Experience; accentText: st
                         src={item.images[currentImage]}
                         alt={`${item.title} image ${currentImage + 1}`}
                         fill
-                        quality={100}
                         className="object-contain"
                         sizes="(min-width: 768px) 42rem, 100vw"
                       />
@@ -571,6 +573,8 @@ function CorporateProject({ project, nextProject }: { project: Project; nextProj
             src={project.image}
             alt={project.alt}
             fill
+            sizes="(min-width: 768px) 60vw, 100vw"
+            priority
             className="object-cover"
           />
         </div>

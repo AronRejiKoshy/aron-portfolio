@@ -203,7 +203,7 @@ export const experience: Experience[] = [
   {
     title: "How do you make people care about non-league football before kick-off?",
     detail:
-      "Working in matchday media for Cray Valley PM FC taught me that local football isn't about glamour, it's about grit. I focused on capturing that raw Saturday tension for the community. Whether you're working for a local club or a Premier League giant, the job is exactly the same: translating the 90 minutes into narratives that rival the big leagues and making people care before the whistle blows.",
+      "Working in matchday media for Cray Valley PM FC taught me that local football isn't about glamour, it's about grit. Without realising it at the time, standing on the sidelines recording raw, reactive content for Instagram was a crash course in social-first thinking. It wasn't about broadcasting polished match updates; it was about tapping into the immediate culture of the terraces and giving fans content that felt native to their feeds. It proved that whether you're working for a local club or a Premier League giant, the job is the same: treating social channels as active communities where narratives are built before the whistle even blows.",
     links: [
       { label: "Instagram", url: "https://www.instagram.com/crayvalleypm/" },
       { label: "X (Twitter)", url: "https://x.com/CrayValleyPM" }
