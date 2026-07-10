@@ -7,9 +7,9 @@ import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.aronreji.com"),
+  metadataBase: new URL("https://aronreji.com"),
   alternates: {
-    canonical: "/", // This tells Google: "Yes, the www version is the master copy!"
+    canonical: "/", // This tells Google: "Yes, the naked version is the master copy!"
   },
   title: "Aron Reji | Professionally Distracted",
   description:
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Aron Reji | Professionally Distracted",
     description: "The digital playground of Aron Reji. I bridge the gap between strategy and art direction by building campaigns people actually want to look at.",
-    url: "https://www.aronreji.com",
+    url: "https://aronreji.com",
     siteName: "Aron Reji Portfolio",
     locale: "en_GB",
     type: "website",
