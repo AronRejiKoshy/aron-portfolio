@@ -2,7 +2,7 @@
 
 import { useCorporateMode } from "@/components/corporate-mode";
 import { Reveal } from "@/components/reveal";
-import { ArrowUpRight, Copy, Check, MousePointer2, FileText } from "lucide-react";
+import { ArrowUpRight, Copy, Check, MousePointer2, FileText, X, Download } from "lucide-react";
 import dynamic from "next/dynamic";
 import { useState } from "react";
 
@@ -20,6 +20,7 @@ const Lanyard = dynamic(() => import("@/components/lanyard"), {
 export function ContactPage() {
   const { corporate } = useCorporateMode();
   const [copied, setCopied] = useState(false);
+  const [showCV, setShowCV] = useState(false);
   const email = "aronreji05@gmail.com";
 
   const handleCopy = () => {
@@ -43,6 +44,13 @@ export function ContactPage() {
               <strong>LinkedIn:</strong>{" "}
               <a href="https://www.linkedin.com/in/aron-reji-/" target="_blank" rel="noopener noreferrer" className="text-signal-blue underline hover:no-underline">
                 linkedin.com/in/aron-reji-
+              </a>
+            </p>
+            <p>
+              <strong>Curriculum Vitae:</strong>{" "}
+              {/* Corporate Mode: Forces an immediate, blind download */}
+              <a href="/aron-reji-cv.pdf" download="Aron_Reji_CV.pdf" className="text-signal-blue underline hover:no-underline">
+                Download Document
               </a>
             </p>
           </div>
@@ -110,15 +118,14 @@ export function ContactPage() {
 
               <div>
                 <p className="text-sm text-signal-paper/40 mb-2">The Boring Stuff</p>
-                <a 
-                  href="/aron-reji-cv.pdf" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
+                {/* Standard Mode: Triggers the sleek custom modal */}
+                <button 
+                  onClick={() => setShowCV(true)}
                   className="group inline-flex items-center gap-3 text-xl md:text-2xl text-white transition-colors hover:text-signal-orange"
                 >
-                  Download CV 
+                  View CV 
                   <FileText size={24} className="text-signal-paper/40 transition-colors group-hover:text-signal-orange" />
-                </a>
+                </button>
               </div>
             </div>
 
@@ -126,7 +133,7 @@ export function ContactPage() {
         </Reveal>
       </div>
 
-      {/* RIGHT SIDE: Interactive Lanyard with restored Halloween glow */}
+      {/* RIGHT SIDE: Interactive Lanyard */}
       <div className="w-full md:w-1/2 h-[50vh] md:h-[80vh] relative flex flex-col items-center justify-center rounded-[2rem] border border-white/10 bg-[radial-gradient(circle_at_center,rgba(255,90,0,0.15)_0%,transparent_60%)] overflow-hidden">
         
         {/* Interact Prompt Label */}
@@ -147,6 +154,43 @@ export function ContactPage() {
           />
         </div>
       </div>
+
+      {/* CUSTOM CV MODAL */}
+      {showCV && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 p-4 md:p-8 backdrop-blur-sm" onClick={() => setShowCV(false)}>
+          <div className="relative w-full max-w-4xl h-full max-h-[90vh] bg-ink-950 border border-white/10 rounded-2xl overflow-hidden flex flex-col shadow-2xl" onClick={(e) => e.stopPropagation()}>
+            
+            {/* Modal Header */}
+            <div className="flex items-center justify-between p-4 md:px-6 border-b border-white/10 bg-ink-900">
+              <h3 className="text-white font-display text-xl tracking-wider">CV</h3>
+              <div className="flex items-center gap-3">
+                <a 
+                  href="/aron-reji-cv.pdf" 
+                  download="Aron_Reji_CV.pdf" 
+                  className="flex items-center gap-2 text-sm bg-signal-orange text-black px-4 py-2 rounded-full font-bold hover:bg-white transition-colors"
+                >
+                  <Download size={16} />
+                  Download
+                </a>
+                <button 
+                  onClick={() => setShowCV(false)} 
+                  className="text-signal-paper/60 hover:text-white transition-colors p-2"
+                  aria-label="Close modal"
+                >
+                  <X size={24} />
+                </button>
+              </div>
+            </div>
+
+            {/* Modal Body - PDF Iframe */}
+            <iframe 
+              src="/aron-reji-cv.pdf" 
+              className="w-full flex-1 bg-white"
+              title="Aron Reji CV"
+            />
+          </div>
+        </div>
+      )}
 
     </main>
   );
